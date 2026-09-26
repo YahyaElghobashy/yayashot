@@ -438,7 +438,7 @@ nonisolated enum RecordingTranscriptionService {
             throw TranscriptionError.narrationUnreadable
         }
         let outputURL = FileManager.default.temporaryDirectory
-            .appendingPathComponent("bettershot-narration-\(UUID().uuidString)")
+            .appendingPathComponent("yayashot-narration-\(UUID().uuidString)")
             .appendingPathExtension("m4a")
         try await exportSession.export(to: outputURL, as: .m4a)
         return outputURL

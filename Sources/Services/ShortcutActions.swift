@@ -81,7 +81,7 @@ extension ShortcutService {
             let panel = NSOpenPanel()
             panel.allowedContentTypes = [.image]
             panel.allowsMultipleSelection = true
-            panel.message = "Choose images to annotate in BetterShot."
+            panel.message = "Choose images to annotate in YayaShot."
             NSApp.activate(ignoringOtherApps: true)
             if panel.runModal() == .OK {
                 panel.urls.forEach { PreviewPanelPresenter.shared.openEditor(for: $0) }

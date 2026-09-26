@@ -232,7 +232,7 @@ final class NotchVoiceCapture {
         let screen = ActiveDisplayResolver.activeScreen(preferPointer: true)
         let notch = NotchPresenter.shared
         if includeVoice, !(await AVCaptureDevice.requestAccess(for: .audio)) {
-            notch.captureIssue = ("Microphone access needed", "Allow BetterShot in System Settings → Privacy & Security → Microphone, then try Voice again.")
+            notch.captureIssue = ("Microphone access needed", "Allow YayaShot in System Settings → Privacy & Security → Microphone, then try Voice again.")
             notch.show(on: screen)
             return
         }

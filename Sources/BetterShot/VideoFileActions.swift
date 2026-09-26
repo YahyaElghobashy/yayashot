@@ -100,7 +100,7 @@ enum VideoFileActions {
     static func saveToDefaultLocation(from url: URL, suggestedFileName: String? = nil) async throws -> URL {
         let fileName = suggestedFileName ?? exportFileName(for: url)
         let stagingURL = try ScreenshotFileActions.exportDestination(
-            named: ".BetterShot-\(UUID().uuidString).\(URL(fileURLWithPath: fileName).pathExtension)")
+            named: ".YayaShot-\(UUID().uuidString).\(URL(fileURLWithPath: fileName).pathExtension)")
         defer { try? FileManager.default.removeItem(at: stagingURL) }
         try await save(from: url, to: stagingURL)
         // Remuxing suspends. Choose the free name afterward, so concurrent
@@ -118,7 +118,7 @@ enum VideoFileActions {
     /// take the copy path, which on APFS is a clone rather than a byte copy.
     static func save(from sourceURL: URL, to destinationURL: URL) async throws {
         let stagingURL = destinationURL.deletingLastPathComponent()
-            .appendingPathComponent(".BetterShot-\(UUID().uuidString)")
+            .appendingPathComponent(".YayaShot-\(UUID().uuidString)")
             .appendingPathExtension(destinationURL.pathExtension)
         defer { try? FileManager.default.removeItem(at: stagingURL) }
 

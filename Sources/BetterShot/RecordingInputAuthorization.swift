@@ -85,13 +85,13 @@ enum RecordingInputAuthorization {
         alert.messageText = "\(input.title) access needed"
 
         if isRestricted {
-            alert.informativeText = "BetterShot can't use the \(input.title.lowercased()) because access is restricted on this Mac."
+            alert.informativeText = "YayaShot can't use the \(input.title.lowercased()) because access is restricted on this Mac."
             alert.addButton(withTitle: "OK")
             alert.runModal()
             return
         }
 
-        alert.informativeText = "Allow BetterShot to use the \(input.title.lowercased()) in Privacy & Security, then select it again."
+        alert.informativeText = "Allow YayaShot to use the \(input.title.lowercased()) in Privacy & Security, then select it again."
         alert.addButton(withTitle: "Open System Settings")
         alert.addButton(withTitle: "Cancel")
 

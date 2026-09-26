@@ -72,7 +72,7 @@ final class ShortcutService {
 
         guard !isRecordingShortcut, ProcessInfo.processInfo.environment["BETTERSHOT_TESTING"] != "1" else { return }
         guard Self.hasAccessibilityPermission else {
-            print("BetterShot: No accessibility permission, skipping event tap registration")
+            print("YayaShot: No accessibility permission, skipping event tap registration")
             return
         }
 
@@ -88,7 +88,7 @@ final class ShortcutService {
             callback: ShortcutService.eventTapCallback,
             userInfo: nil
         ) else {
-            print("BetterShot: Failed to create event tap — app may need a restart after granting Accessibility permission")
+            print("YayaShot: Failed to create event tap — app may need a restart after granting Accessibility permission")
             return
         }
 
@@ -99,7 +99,7 @@ final class ShortcutService {
         self.eventTap = tap
         self.runLoopSource = source
         Self.cacheShortcuts()
-        print("BetterShot: Event tap registered successfully — keyboard shortcuts active")
+        print("YayaShot: Event tap registered successfully — keyboard shortcuts active")
     }
 
     private static func cacheShortcuts() {

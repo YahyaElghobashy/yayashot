@@ -176,7 +176,7 @@ enum RecordingSessionRenderer {
         let alert = NSAlert()
         alert.alertStyle = .warning
         alert.messageText = "The camera video could not be added"
-        alert.informativeText = "Your screen, camera, and audio masters are safe in the recording project, but BetterShot could not create the combined video: \(error.localizedDescription)"
+        alert.informativeText = "Your screen, camera, and audio masters are safe in the recording project, but YayaShot could not create the combined video: \(error.localizedDescription)"
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }

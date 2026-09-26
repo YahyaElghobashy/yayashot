@@ -18,7 +18,7 @@ enum PointerArtworkCapture {
         if let cached = styledCache[appearance] { return cached }
         if appearance == .hand {
             let artwork = capture(NSCursor.pointingHand,
-                                  id: "bettershot-cursor-" + appearance.rawValue)
+                                  id: "yayashot-cursor-" + appearance.rawValue)
             if let artwork { styledCache[appearance] = artwork }
             return artwork
         }
@@ -62,7 +62,7 @@ enum PointerArtworkCapture {
         guard let image = context.makeImage() else { return nil }
         let artwork = encode(image, size: size,
             hotSpot: isDot ? CGPoint(x: 16, y: 20) : CGPoint(x: 5, y: 4),
-            id: "bettershot-cursor-" + appearance.rawValue)
+            id: "yayashot-cursor-" + appearance.rawValue)
         if let artwork { styledCache[appearance] = artwork }
         return artwork
     }

@@ -4,10 +4,10 @@ import Foundation
 enum DeckStaging {
     nonisolated static let directory: URL = {
         if ProcessInfo.processInfo.environment["BETTERSHOT_TESTING"] == "1" {
-            return FileManager.default.temporaryDirectory.appendingPathComponent("BetterShotDeckTests-\(UUID().uuidString)")
+            return FileManager.default.temporaryDirectory.appendingPathComponent("YayaShotDeckTests-\(UUID().uuidString)")
         }
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        return appSupport.appendingPathComponent("BetterShot/deck", isDirectory: true)
+        return appSupport.appendingPathComponent("YayaShot/deck", isDirectory: true)
     }()
 
     private static var savedCopies: [URL: URL] = [:]

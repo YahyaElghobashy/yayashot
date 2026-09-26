@@ -181,7 +181,7 @@ final class RecordingKeystrokeRecorder {
             callback: callback,
             userInfo: userInfo
         ) else {
-            NSLog("[BetterShot] Keystroke event tap unavailable; using NSEvent monitors only.")
+            NSLog("[YayaShot] Keystroke event tap unavailable; using NSEvent monitors only.")
             return
         }
 

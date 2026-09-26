@@ -130,7 +130,7 @@ struct OnboardingView: View {
             heading("Set up permissions",
                 detail: "Allow screen capture to get started. Choose the other features you’ll use.")
             if isPermissionPreview {
-                Label("Preview only. Open BetterShot to grant permissions.", systemImage: "info.circle")
+                Label("Preview only. Open YayaShot to grant permissions.", systemImage: "info.circle")
                     .font(.caption).foregroundStyle(.secondary)
             }
             VStack(spacing: 8) {
@@ -141,7 +141,7 @@ struct OnboardingView: View {
             Text("Microphone and camera stay off until you choose them for a recording.")
                 .font(.caption).foregroundStyle(.secondary)
             if permissions.shortcutsNeedRestart {
-                Label("Save your work and reopen BetterShot to activate shortcuts.", systemImage: "arrow.clockwise")
+                Label("Save your work and reopen YayaShot to activate shortcuts.", systemImage: "arrow.clockwise")
                     .font(.callout).foregroundStyle(.secondary)
             }
             HStack(spacing: 12) {
@@ -184,7 +184,7 @@ struct OnboardingView: View {
             if permissions.status(.accessibility) != .allowed || permissions.shortcutsNeedRestart {
                 HStack(alignment: .top, spacing: 12) {
                     Text(permissions.shortcutsNeedRestart
-                         ? "Reopen BetterShot to activate shortcuts. The clover menu works now."
+                         ? "Reopen YayaShot to activate shortcuts. The clover menu works now."
                          : "Shortcuts need Accessibility access. The clover menu works without it.")
                         .font(.callout).foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -223,7 +223,7 @@ struct OnboardingView: View {
             .buttonStyle(.plain)
             .accessibilityHint("Opens a separate copy in the image editor. No screen access needed.")
             DisclosureGroup("Watch a short demo") {
-                Picker("Explore BetterShot", selection: $demo) {
+                Picker("Explore YayaShot", selection: $demo) {
                     ForEach(OnboardingDemo.allCases) { demo in Text(demo.title).tag(demo) }
                 }.pickerStyle(.segmented)
                 OnboardingDemoView(demo: demo, resourceBundle: resourceBundle).id(demo)
@@ -274,7 +274,7 @@ struct OnboardingView: View {
         do {
             let directory = try FileManager.default.url(for: .applicationSupportDirectory,
                 in: .userDomainMask, appropriateFor: nil, create: true)
-                .appendingPathComponent("BetterShot/Practice", isDirectory: true)
+                .appendingPathComponent("YayaShot/Practice", isDirectory: true)
             let url = try sample.makeWorkingCopy(in: directory, bundle: resourceBundle)
             OnboardingWindowController.shared.finish()
             openEditor(url)

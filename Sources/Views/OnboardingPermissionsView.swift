@@ -182,10 +182,10 @@ struct OnboardingPermissionRow: View {
                 Text("Restricted by this Mac’s settings or administrator. You can continue without this feature.")
                     .font(.caption).foregroundStyle(.secondary)
             } else if status != .allowed && permission.needsSettings(status: status, attempted: attempted) {
-                Text("In Privacy & Security → \(permission.title), turn on BetterShot, then return here.")
+                Text("In Privacy & Security → \(permission.title), turn on YayaShot, then return here.")
                     .font(.caption).foregroundStyle(.secondary)
                 if permission.mayNeedRestart {
-                    Text("If macOS asks you to quit, save your work and reopen BetterShot.")
+                    Text("If macOS asks you to quit, save your work and reopen YayaShot.")
                         .font(.caption).foregroundStyle(.secondary)
                 }
             }
@@ -238,7 +238,7 @@ struct ShortcutPermissionView: View {
                 request: { Task { await permissions.request(.accessibility) } },
                 openSettings: { permissions.openSettings(.accessibility) })
             if permissions.shortcutsNeedRestart {
-                Text("Access is allowed, but shortcuts aren’t active. Save your work, then quit and reopen BetterShot.")
+                Text("Access is allowed, but shortcuts aren’t active. Save your work, then quit and reopen YayaShot.")
                     .font(.callout).foregroundStyle(.secondary)
             }
         }

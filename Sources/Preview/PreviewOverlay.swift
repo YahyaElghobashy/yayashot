@@ -373,7 +373,7 @@ final class PreviewOverlay {
             backing: .buffered,
             defer: false
         )
-        panel.identifier = NSUserInterfaceItemIdentifier("BetterShot.CaptureOverlay")
+        panel.identifier = NSUserInterfaceItemIdentifier("YayaShot.CaptureOverlay")
         panel.title = "Capture overlay"
         panel.isOpaque = false
         panel.backgroundColor = .clear

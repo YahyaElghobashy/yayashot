@@ -82,7 +82,7 @@ final class CaptureOrchestrator {
     private nonisolated static func writeScrollImage(_ image: CGImage) async throws -> URL {
         try await Task.detached(priority: .userInitiated) {
             let url = FileManager.default.temporaryDirectory
-                .appendingPathComponent("bettershot_scroll_\(UUID().uuidString).png")
+                .appendingPathComponent("yayashot_scroll_\(UUID().uuidString).png")
             guard let data = NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:]) else {
                 throw CocoaError(.fileWriteUnknown)
             }
@@ -275,7 +275,7 @@ final class CaptureOrchestrator {
     /// capture's name, in a private folder of its own.
     private static func unstagedCapture(_ url: URL, named fileName: String) -> URL {
         let folder = FileManager.default.temporaryDirectory
-            .appendingPathComponent("BetterShot-Unstaged", isDirectory: true)
+            .appendingPathComponent("YayaShot-Unstaged", isDirectory: true)
             .appendingPathComponent(UUID().uuidString, isDirectory: true)
         let named = folder.appendingPathComponent(
             ScreenshotFileNaming.fileName(of: URL(fileURLWithPath: fileName), extension: url.pathExtension))
@@ -326,7 +326,7 @@ final class CaptureOrchestrator {
     /// Legacy home of duplicated raw copies. Nothing writes here any more; kept so old captures still resolve.
     static var baseStorageDir: URL {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        return appSupport.appendingPathComponent("BetterShot/bases", isDirectory: true)
+        return appSupport.appendingPathComponent("YayaShot/bases", isDirectory: true)
     }
 
     static func baseImageURL(for url: URL) -> URL {

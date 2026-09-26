@@ -454,7 +454,7 @@ final class TransferToastAnchorView: NSView {
             let hostingView = NSHostingView(rootView: card)
             self.hostingView = hostingView
             panel = ToastWindow.makePanel(hostingView: hostingView)
-            panel?.identifier = NSUserInterfaceItemIdentifier("BetterShot.TransferToast")
+            panel?.identifier = NSUserInterfaceItemIdentifier("YayaShot.TransferToast")
             panel?.title = "Export and sharing status"
         }
         guard let panel else { return }

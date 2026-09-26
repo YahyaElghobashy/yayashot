@@ -25,7 +25,7 @@ final class MenuBarPopoverController: NSObject {
         if let button = item.button {
             button.image = NSImage(named: "MenuBarIcon")
             button.image?.isTemplate = true
-            button.setAccessibilityLabel("BetterShot")
+            button.setAccessibilityLabel("YayaShot")
             button.action = #selector(togglePopover(_:))
             button.target = self
         }
@@ -115,7 +115,7 @@ final class MenuBarPopoverController: NSObject {
             defer: false
         )
         panel.isOpaque = false
-        panel.identifier = NSUserInterfaceItemIdentifier("BetterShot.MenuBar")
+        panel.identifier = NSUserInterfaceItemIdentifier("YayaShot.MenuBar")
         panel.backgroundColor = .clear
         panel.hasShadow = false
         panel.level = .statusBar

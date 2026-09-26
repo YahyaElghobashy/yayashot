@@ -36,7 +36,7 @@ final class ScrollCaptureController {
     private let captureRect: NSRect
     private let captureRectCG: CGRect
     private let backingScale: CGFloat
-    private let captureQueue = DispatchQueue(label: "bettershot.scrollcapture", qos: .userInitiated)
+    private let captureQueue = DispatchQueue(label: "yayashot.scrollcapture", qos: .userInitiated)
 
     private var shotA: CGImage?
     private var headerHeight = 0

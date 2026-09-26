@@ -359,7 +359,7 @@ nonisolated final class PointerActivityRecorder: NSObject, @unchecked Sendable {
             callback: callback,
             userInfo: userInfo
         ) else {
-            NSLog("[BetterShot] Pointer event tap unavailable; using sampled cursor fallback.")
+            NSLog("[YayaShot] Pointer event tap unavailable; using sampled cursor fallback.")
             return false
         }
 
@@ -374,7 +374,7 @@ nonisolated final class PointerActivityRecorder: NSObject, @unchecked Sendable {
         guard CGEvent.tapIsEnabled(tap: tap) else {
             CFRunLoopRemoveSource(CFRunLoopGetMain(), source, .commonModes)
             CFMachPortInvalidate(tap)
-            NSLog("[BetterShot] Pointer event tap created but not enabled (Input Monitoring not granted); using sampled cursor fallback.")
+            NSLog("[YayaShot] Pointer event tap created but not enabled (Input Monitoring not granted); using sampled cursor fallback.")
             return false
         }
 
@@ -460,7 +460,7 @@ nonisolated final class PointerActivityRecorder: NSObject, @unchecked Sendable {
     @MainActor
     private func installSampledTravelFallback() {
         let timer = DispatchSource.makeTimerSource(queue: DispatchQueue(
-            label: "com.bettershot.recording.pointer-capture",
+            label: "com.yahyaelghobashy.yayashot.recording.pointer-capture",
             qos: .utility
         ))
         timer.schedule(deadline: .now(), repeating: 1.0 / 60.0, leeway: .milliseconds(4))

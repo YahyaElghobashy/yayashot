@@ -21,13 +21,13 @@ struct BetterShotApp: App {
         }
         .defaultLaunchBehavior(.suppressed)
 
-        WindowGroup("BetterShot Annotate", id: "ANNOTATION_EDITOR", for: URL.self) { value in
+        WindowGroup("YayaShot Annotate", id: "ANNOTATION_EDITOR", for: URL.self) { value in
             AnnotationEditorWindow(url: value)
         }
         .windowResizability(.contentMinSize)
         .defaultSize(width: 1100, height: 760)
 
-        WindowGroup("BetterShot Recording Editor", id: "VIDEO_EDITOR", for: URL.self) { value in
+        WindowGroup("YayaShot Recording Editor", id: "VIDEO_EDITOR", for: URL.self) { value in
             RecordingStudioWindow(url: value)
         }
         .windowResizability(.contentMinSize)

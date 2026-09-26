@@ -42,7 +42,7 @@ final class ScreenCapture {
             // prevent. Only expected to happen in a narrow race (e.g. the
             // target display disconnected between resolution and the sleep
             // above), but it should be diagnosable if it does.
-            print("BetterShot: could not resolve target display for -D; screencapture will fall back to the main display")
+            print("YayaShot: could not resolve target display for -D; screencapture will fall back to the main display")
         }
         args.append(tempPath)
 
@@ -217,8 +217,8 @@ final class ScreenCapture {
         if status == 0 { return true }
         let message = diagnostic.trimmingCharacters(in: .whitespacesAndNewlines)
         if status == 1 && message.isEmpty { return false }
-        throw NSError(domain: "BetterShot.ScreenCapture", code: Int(status), userInfo: [
-            NSLocalizedDescriptionKey: "\(message.isEmpty ? "macOS could not create the screenshot." : message) Try again. If this continues, quit and reopen BetterShot and check Screen & System Audio Recording permission in System Settings."
+        throw NSError(domain: "YayaShot.ScreenCapture", code: Int(status), userInfo: [
+            NSLocalizedDescriptionKey: "\(message.isEmpty ? "macOS could not create the screenshot." : message) Try again. If this continues, quit and reopen YayaShot and check Screen & System Audio Recording permission in System Settings."
         ])
     }
 

@@ -12,7 +12,7 @@ nonisolated enum CaptureURLAction: String, CaseIterable {
 
     init?(url: URL) {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-              components.scheme?.lowercased() == "bettershot",
+              components.scheme?.lowercased() == "yayashot",
               components.user == nil, components.password == nil, components.port == nil,
               components.query == nil, components.fragment == nil,
               let host = components.host else { return nil }

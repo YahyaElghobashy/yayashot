@@ -207,7 +207,7 @@ final class RecordingBarPresenter {
         )
 
         panel.backgroundColor = .clear
-        panel.identifier = NSUserInterfaceItemIdentifier("BetterShot.RecordingBar")
+        panel.identifier = NSUserInterfaceItemIdentifier("YayaShot.RecordingBar")
         panel.isOpaque = false
         // Shadows are drawn in SwiftUI, not by AppKit. The window shadow is
         // derived from the window's alpha silhouette and recomputed lazily,

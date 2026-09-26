@@ -99,7 +99,7 @@ enum AnnotationRenderer {
         // Encode beside the destination, then replace atomically. A failed
         // render must never remove the user's previous export.
         let stagingURL = destinationURL.deletingLastPathComponent()
-            .appendingPathComponent(".BetterShot-\(UUID().uuidString).\(destinationURL.pathExtension)")
+            .appendingPathComponent(".YayaShot-\(UUID().uuidString).\(destinationURL.pathExtension)")
         defer { try? FileManager.default.removeItem(at: stagingURL) }
 
         let cacheKey = contentType == .png && (!shapes.isEmpty || backgroundSettings.hasRenderableContent)

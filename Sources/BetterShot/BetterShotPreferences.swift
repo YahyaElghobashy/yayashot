@@ -285,7 +285,7 @@ enum ScreenshotFileActions {
         // Paste targets show the file name, so it carries the capture's name;
         // a per-copy folder keeps two copies of one capture apart.
         let clipboardDirectory = FileManager.default.temporaryDirectory
-            .appendingPathComponent("BetterShot-Clipboard", isDirectory: true)
+            .appendingPathComponent("YayaShot-Clipboard", isDirectory: true)
             .appendingPathComponent(UUID().uuidString, isDirectory: true)
         try FileManager.default.createDirectory(at: clipboardDirectory, withIntermediateDirectories: true)
         let clipboardURL = clipboardDirectory
@@ -306,7 +306,7 @@ enum ScreenshotFileActions {
         let item = NSPasteboardItem()
         if let text {
             item.setString(text, forType: .string)
-            item.setString("", forType: .init("com.bettershot.voice-capture"))
+            item.setString("", forType: .init("com.yahyaelghobashy.yayashot.voice-capture"))
         }
         item.setString(clipboardURL.absoluteString, forType: .fileURL)
         item.setData(imageData, forType: dataType)
@@ -372,7 +372,7 @@ enum ScreenshotFileActions {
 
         let stagingURL = destinationURL
             .deletingLastPathComponent()
-            .appendingPathComponent(".BetterShot-\(UUID().uuidString)-\(destinationURL.lastPathComponent)")
+            .appendingPathComponent(".YayaShot-\(UUID().uuidString)-\(destinationURL.lastPathComponent)")
         defer { try? FileManager.default.removeItem(at: stagingURL) }
 
         if destinationType == .png, actualImageContentType(at: sourceURL) == .png {

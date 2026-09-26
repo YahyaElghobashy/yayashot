@@ -44,7 +44,7 @@ enum RecordingRecoveryCoordinator {
             alert.messageText = recoveredCount == 1
                 ? "Recovered an interrupted recording"
                 : "Recovered \(recoveredCount) interrupted recordings"
-            alert.informativeText = "The playable footage was preserved in History and can be reopened in BetterShot Studio."
+            alert.informativeText = "The playable footage was preserved in History and can be reopened in YayaShot Studio."
             alert.addButton(withTitle: "OK")
             alert.runModal()
         }

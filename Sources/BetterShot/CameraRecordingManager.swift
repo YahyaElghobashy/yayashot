@@ -238,8 +238,8 @@ final class CameraRecordingManager {
 
 nonisolated private final class CameraCaptureEngine: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, @unchecked Sendable {
     private let session = AVCaptureSession()
-    private let sessionQueue = DispatchQueue(label: "com.bettershot.camera.session", qos: .userInitiated)
-    private let videoQueue = DispatchQueue(label: "com.bettershot.camera.video", qos: .userInitiated)
+    private let sessionQueue = DispatchQueue(label: "com.yahyaelghobashy.yayashot.camera.session", qos: .userInitiated)
+    private let videoQueue = DispatchQueue(label: "com.yahyaelghobashy.yayashot.camera.video", qos: .userInitiated)
     private let writer = CameraMovieWriter()
     private var input: AVCaptureDeviceInput?
     private var output: AVCaptureVideoDataOutput?
@@ -397,7 +397,7 @@ nonisolated private final class CameraCaptureEngine: NSObject, AVCaptureVideoDat
 // MARK: - Camera movie writer
 
 nonisolated private final class CameraMovieWriter: @unchecked Sendable {
-    private let writingQueue = DispatchQueue(label: "com.bettershot.camera.writer", qos: .userInitiated)
+    private let writingQueue = DispatchQueue(label: "com.yahyaelghobashy.yayashot.camera.writer", qos: .userInitiated)
     private var assetWriter: AVAssetWriter?
     private var videoInput: AVAssetWriterInput?
     private var outputURL: URL?

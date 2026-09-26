@@ -336,7 +336,7 @@ struct RecordingStudioContent: View {
             }
         }
         .disabled(!model.hasUnsavedChanges)
-        .help(ShortcutService.shared.help("Save your edits in BetterShot", for: .videoSave))
+        .help(ShortcutService.shared.help("Save your edits in YayaShot", for: .videoSave))
     }
 
     @ViewBuilder
@@ -3476,7 +3476,7 @@ struct StudioInspector: View {
     @ViewBuilder
     private var cursorControls: some View {
         if !model.pointerIsSynthesized {
-            Text("Cursor editing needs a recording made with BetterShot. Cursors already in a video cannot be changed.")
+            Text("Cursor editing needs a recording made with YayaShot. Cursors already in a video cannot be changed.")
                 .font(.inspectorLabel).foregroundStyle(.secondary)
         } else {
             VStack(alignment: .leading, spacing: 16) {

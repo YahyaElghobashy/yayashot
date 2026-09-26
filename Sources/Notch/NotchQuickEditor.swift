@@ -43,8 +43,8 @@ final class NotchQuickEditor: NSObject, NSWindowDelegate {
         let panel = NotchQuickPanel(contentRect: .zero, styleMask: [.borderless], backing: .buffered, defer: false)
         panel.isReleasedWhenClosed = false
         panel.delegate = self
-        panel.title = "BetterShot quick editor"
-        panel.identifier = .init("BetterShot.QuickEditor")
+        panel.title = "YayaShot quick editor"
+        panel.identifier = .init("YayaShot.QuickEditor")
         panel.level = fullScreen ? NSWindow.Level(rawValue: NSWindow.Level.statusBar.rawValue - 1) : .statusBar
         panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         panel.backgroundColor = .clear
@@ -88,7 +88,7 @@ final class NotchQuickEditor: NSObject, NSWindowDelegate {
         }
         guard panel != nil else { return }
         do {
-            let url = FileManager.default.temporaryDirectory.appendingPathComponent("BetterShotVoice-\(UUID()).m4a")
+            let url = FileManager.default.temporaryDirectory.appendingPathComponent("YayaShotVoice-\(UUID()).m4a")
             self.audioURL = url
             let recorder = try AVAudioRecorder(url: url, settings: [
                 AVFormatIDKey: kAudioFormatMPEG4AAC, AVSampleRateKey: 44100,
@@ -195,7 +195,7 @@ final class NotchQuickEditor: NSObject, NSWindowDelegate {
         if model.hasUnsavedChanges || audioURL != nil {
             let alert = NSAlert()
             alert.messageText = "Discard this quick edit?"
-            alert.informativeText = "Your original screenshot stays in BetterShot. Unsaved annotations and voice will be discarded."
+            alert.informativeText = "Your original screenshot stays in YayaShot. Unsaved annotations and voice will be discarded."
             alert.addButton(withTitle: "Keep Editing")
             alert.addButton(withTitle: "Discard")
             return alert.runModal() == .alertSecondButtonReturn

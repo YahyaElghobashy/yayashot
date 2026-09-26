@@ -62,8 +62,8 @@ final class NotchPresenter {
             }
             notch.onHoverChanged = { [weak self] in self?.updateHoverState($0) }
             notch.configureWindow = { panel in
-                panel.identifier = NSUserInterfaceItemIdentifier("BetterShot.Notch")
-                panel.title = "BetterShot notch"
+                panel.identifier = NSUserInterfaceItemIdentifier("YayaShot.Notch")
+                panel.title = "YayaShot notch"
                 panel.level = .statusBar
                 panel.appearance = NSAppearance(named: .darkAqua)
                 panel.isOpaque = false
@@ -403,8 +403,8 @@ struct NotchCompactLeading: View {
                 .frame(width: 28, height: 22)
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("BetterShot — open previews")
-        .help("BetterShot — saved captures, text, and colors")
+        .accessibilityLabel("YayaShot — open previews")
+        .help("YayaShot — saved captures, text, and colors")
     }
 }
 
@@ -416,7 +416,7 @@ struct NotchCompactTrailing: View {
         if PreviewOverlay.shared.isPresented || NotchPresenter.shared.ocrText != nil || NotchPresenter.shared.colorHex != nil {
             return ("Preview ready", "checkmark")
         }
-        return ("BetterShot previews", "checkmark")
+        return ("YayaShot previews", "checkmark")
     }
 
     var body: some View {

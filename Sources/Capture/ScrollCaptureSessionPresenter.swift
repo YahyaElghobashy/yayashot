@@ -140,7 +140,7 @@ final class ScrollCaptureSessionPresenter {
         let size = ScrollCaptureSessionView.size
         let panel = NSPanel(contentRect: NSRect(origin: .zero, size: size),
             styleMask: [.borderless, .nonactivatingPanel], backing: .buffered, defer: false)
-        panel.identifier = NSUserInterfaceItemIdentifier("BetterShot.ScrollCaptureControls")
+        panel.identifier = NSUserInterfaceItemIdentifier("YayaShot.ScrollCaptureControls")
         panel.isOpaque = false
         panel.backgroundColor = .clear
         panel.hasShadow = false

@@ -18,7 +18,7 @@ import Foundation
 nonisolated enum ScreenshotFileNaming {
     /// The pre-0.5.0 name, written as a template. Upgrading changes nothing
     /// about the files that land in the save folder.
-    static let defaultTemplate = "BetterShot_{date}-{time}"
+    static let defaultTemplate = "YayaShot_{date}-{time}"
 
     enum Kind: String {
         case screenshot = "Screenshot"
@@ -120,7 +120,7 @@ nonisolated enum ScreenshotFileNaming {
         in directory: URL = FileManager.default.temporaryDirectory
     ) -> URL {
         directory
-            .appendingPathComponent("BetterShot-\(purpose)-\(UUID().uuidString)")
+            .appendingPathComponent("YayaShot-\(purpose)-\(UUID().uuidString)")
             .appendingPathExtension(pathExtension.isEmpty ? "png" : pathExtension)
     }
 

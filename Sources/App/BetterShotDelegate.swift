@@ -26,7 +26,7 @@ final class BetterShotDelegate: NSObject, NSApplicationDelegate {
         do {
             try Tips.configure([.displayFrequency(.daily)])
         } catch {
-            print("BetterShot: Contextual tips unavailable: \(error.localizedDescription)")
+            print("YayaShot: Contextual tips unavailable: \(error.localizedDescription)")
         }
         // Present after launch setup; never put permission prompts in the launch path.
         DispatchQueue.main.async {
@@ -105,7 +105,7 @@ final class BetterShotDelegate: NSObject, NSApplicationDelegate {
         let alert = NSAlert()
         alert.alertStyle = .warning
         alert.messageText = "A screen recording is still in progress"
-        alert.informativeText = "BetterShot will finish and save the recording before quitting. This can take a moment for a long recording."
+        alert.informativeText = "YayaShot will finish and save the recording before quitting. This can take a moment for a long recording."
         alert.addButton(withTitle: "Cancel")
         alert.addButton(withTitle: "Finish Recording and Quit")
 
@@ -143,7 +143,7 @@ final class BetterShotDelegate: NSObject, NSApplicationDelegate {
     private static func promptRestart() {
         let alert = NSAlert()
         alert.messageText = "Restart Required"
-        alert.informativeText = "BetterShot needs to restart to activate keyboard shortcut overrides. Restart now?"
+        alert.informativeText = "YayaShot needs to restart to activate keyboard shortcut overrides. Restart now?"
         alert.alertStyle = .informational
         alert.addButton(withTitle: "Restart")
         alert.addButton(withTitle: "Later")

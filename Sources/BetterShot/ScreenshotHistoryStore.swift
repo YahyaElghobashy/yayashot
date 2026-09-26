@@ -105,13 +105,13 @@ final class ScreenshotHistoryStore {
     static let shared = ScreenshotHistoryStore()
 
     private static let testingDirectory = FileManager.default.temporaryDirectory
-        .appendingPathComponent("BetterShotHistoryTests-\(UUID().uuidString)", isDirectory: true)
+        .appendingPathComponent("YayaShotHistoryTests-\(UUID().uuidString)", isDirectory: true)
 
     static var applicationSupportDirectory: URL {
         if ProcessInfo.processInfo.environment["BETTERSHOT_TESTING"] == "1" { return testingDirectory }
         let baseURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Application Support", isDirectory: true)
-        return baseURL.appendingPathComponent("BetterShot", isDirectory: true)
+        return baseURL.appendingPathComponent("YayaShot", isDirectory: true)
     }
 
     static var historyDirectory: URL {
@@ -129,7 +129,7 @@ final class ScreenshotHistoryStore {
     /// Location of the editable annotation sidecar document for a display image,
     /// e.g. `BetterShot_2026.png` -> `BetterShot_2026.png.bettershot`.
     static func editDocumentURL(for displayURL: URL) -> URL {
-        displayURL.appendingPathExtension("bettershot")
+        displayURL.appendingPathExtension("yayashot")
     }
 
     /// Location of the untouched base image for a display image,

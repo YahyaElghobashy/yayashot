@@ -66,7 +66,7 @@ enum AppPreferences {
     private static let defaultSaveDirectory: String = {
         if ProcessInfo.processInfo.environment["BETTERSHOT_TESTING"] == "1" {
             return FileManager.default.temporaryDirectory
-                .appendingPathComponent("BetterShotSaveTests-\(UUID().uuidString)", isDirectory: true).path
+                .appendingPathComponent("YayaShotSaveTests-\(UUID().uuidString)", isDirectory: true).path
         }
         return NSHomeDirectory() + "/Desktop"
     }()

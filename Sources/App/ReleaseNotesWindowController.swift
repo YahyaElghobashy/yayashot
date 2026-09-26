@@ -24,7 +24,7 @@ final class ReleaseNotesWindowController: NSObject, NSWindowDelegate {
         if onlyIfNew && notes.isEmpty { return false }
         let view = ReleaseNotesView(version: version, notes: notes) { [weak self] in self?.window?.close() }
         let window = NSWindow(contentViewController: NSHostingController(rootView: view))
-        window.title = "What’s New in BetterShot"
+        window.title = "What’s New in YayaShot"
         window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
         window.setContentSize(NSSize(width: 640, height: 660))
         window.contentMinSize = NSSize(width: 420, height: 420)
@@ -64,7 +64,7 @@ struct ReleaseNotesView: View {
                 Image(nsImage: NSImage(named: "AppIcon") ?? NSApp.applicationIconImage)
                     .resizable().frame(width: 48, height: 48).accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("What’s new in BetterShot").font(.title2.bold()).accessibilityAddTraits(.isHeader)
+                    Text("What’s new in YayaShot").font(.title2.bold()).accessibilityAddTraits(.isHeader)
                     Text("Version \(version)").foregroundStyle(.secondary)
                 }
                 Spacer(minLength: 0)
@@ -86,7 +86,7 @@ struct ReleaseNotesView: View {
                             } else {
                                 Text((try? AttributedString(markdown: paragraph,
                                     options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace),
-                                    baseURL: URL(string: "https://github.com/KartikLabhshetwar/better-shot/blob/main/"))) ?? AttributedString(paragraph))
+                                    baseURL: URL(string: "https://github.com/YahyaElghobashy/yayashot/blob/main/"))) ?? AttributedString(paragraph))
                                     .font(.callout).textSelection(.enabled)
                                     .fixedSize(horizontal: false, vertical: true)
                             }
@@ -97,7 +97,7 @@ struct ReleaseNotesView: View {
             }.scrollIndicators(.hidden)
             Divider()
             HStack {
-                Link("All Release Notes", destination: URL(string: "https://github.com/KartikLabhshetwar/better-shot/blob/main/CHANGELOG.md")!)
+                Link("All Release Notes", destination: URL(string: "https://github.com/YahyaElghobashy/yayashot/blob/main/CHANGELOG.md")!)
                 Spacer()
                 Button("Done", action: onClose)
                     .buttonStyle(EditorButtonStyle(selected: true, horizontalPadding: 20))

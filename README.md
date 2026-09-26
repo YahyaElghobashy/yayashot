@@ -1,229 +1,125 @@
 <p align="center">
-  <img src="Resources/Assets.xcassets/AppIcon.appiconset/icon_128x128.png" width="96" height="96" alt="BetterShot clover icon">
+  <img src="Resources/Brand/AppIcon-1024.png" width="128" height="128" alt="YayaShot icon: an alien camera on a ringed planet">
 </p>
 
-<h1 align="center">BetterShot</h1>
+<h1 align="center">YayaShot</h1>
 
 <p align="center">
-  <strong>Capture, edit, and share your screen. Native on macOS.</strong>
-</p>
-
-<p align="center">
-  <a href="https://formulae.brew.sh/cask/bettershot"><img src="https://img.shields.io/badge/macOS-26.0+-black.svg" alt="macOS 26 or later"></a>
-  <a href="https://github.com/KartikLabhshetwar/better-shot/actions/workflows/build.yml"><img src="https://github.com/KartikLabhshetwar/better-shot/actions/workflows/build.yml/badge.svg" alt="Build status"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-BSD%203--Clause-green.svg" alt="BSD 3-Clause license"></a>
+  <strong>Capture, record and edit your screen on macOS. Private by design.</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/KartikLabhshetwar/better-shot/releases/latest">Download</a> ·
-  <a href="https://bettershot.site">Website</a> ·
-  <a href="CHANGELOG.md">Changelog</a> ·
-  <a href="CONTRIBUTING.md">Contribute</a> ·
-  <a href="https://github.com/KartikLabhshetwar/better-shot/issues">Report a bug</a>
+  <a href="https://github.com/YahyaElghobashy/yayashot/releases/latest">Download</a> ·
+  <a href="#network-policy">Network policy</a> ·
+  <a href="#build-from-source">Build from source</a> ·
+  <a href="CHANGELOG.md">Changelog</a>
 </p>
 
-BetterShot is an open-source Mac app for screenshots, screen recordings, and
-image and video editing. No account or subscription required.
+YayaShot is a sealed, rebranded build of
+[BetterShot](https://github.com/KartikLabhshetwar/better-shot) by Kartik Labhshetwar,
+an open-source Mac app for screenshots, screen recordings, and image and video editing.
+It keeps BetterShot's capture tools and its Screen Studio-style video editor, removes
+every path that uploads your files, and makes updates notify-only.
 
-![BetterShot image editor with editable annotations and background controls](bettershot-landing/public/features/screenshot-editor-dark.webp)
+YayaShot is not affiliated with or endorsed by BetterShot or its author.
 
-## Install
+## What it does
 
-Requires macOS 26 or later.
+**Screenshots.** Region, window, fullscreen and scrolling capture. OCR and a hex
+color picker. Arrows, shapes, text, numbered markers, highlights, blur and pixelate.
+Frame captures on a wallpaper, gradient or solid color with padding, rounded corners
+and a shadow.
 
-```bash
-brew install --cask bettershot
-```
+**Recordings.** Record a display, window or area with system audio, microphone,
+camera and a teleprompter. Pause, restart or discard from a compact bar.
 
-Or download the Apple silicon or Intel `.dmg` from
-[Releases](https://github.com/KartikLabhshetwar/better-shot/releases/latest),
-drag BetterShot into Applications, and open it. A short tour walks you through
-permissions and your first capture.
+**Video editor.** Automatic zoom on clicks with spring motion (switch Auto Zoom off
+or delete any zoom), cursor smoothing, click effects and idle hiding, camera layouts,
+captions from on-device speech recognition, cuts, speed changes, masks, 3D shots with
+depth blur, and MP4 or MOV export at 30 or 60 fps in 16:9, 9:16, 1:1 or 4:5.
 
-## Features
+**Share.** Share opens the macOS share sheet (AirDrop, Messages, Mail, Notes and
+any installed share extensions). Nothing goes to a YayaShot server, because there
+isn't one.
 
-**Screenshots**
-- Region, window, and fullscreen capture. Extract text with OCR or pick a color as hex.
-- Annotate with arrows, shapes, text, numbered markers, highlights, blur, and pixelate.
-- Crop, rotate, and flip without losing editable annotations.
-- Frame captures on a wallpaper, soft gradient, or any solid color with padding, rounded corners, and shadow.
-- Save as PNG or JPEG.
+## Network policy
 
-**Recordings**
-- Record a display, window, or adjustable area with optional system audio, microphone, camera, and teleprompter.
-- Pause, restart, or discard from the compact recording bar.
+YayaShot makes exactly one kind of network request, and only when you ask for it:
 
-**Video editor**
-- Cut clips, change speed from 0.25x to 8x, and add zooms, transitions, captions, and blur or pixelate masks.
-- Arrange screen and camera as Camera Bubble, Overlap, Side-by-Side, Presenter, Camera Only, or Screen Only.
-- Restyle the cursor (Recorded, Arrow, Dark, Light, Dot) with size, smoothing, click effects, and idle hiding.
-- Add 3D shots: eight camera moves, five drifting angles, Auto Scene, depth blur, and keyframed Bézier curves.
-- Export MP4 or MOV at 30 or 60 fps.
+| When | Where | What is sent | Off switch |
+| --- | --- | --- | --- |
+| You click **Check for Updates** in Settings > About, or turn on the launch check (off by default) | `api.github.com` | An HTTPS GET for the latest public release of this repository and of upstream BetterShot. No identifiers, no cookies. | Leave the toggle off and don't click the button |
 
-**Everything else**
-- Copy, save, pin, edit, share, or drag captures from the floating preview.
-- Browse screenshots, recordings, and share links in the Media Gallery.
-- Share to your own Cloudflare R2 bucket with one click.
-- Optional [Notch Mode](#notch-mode) keeps previews and a capture shelf at the top of the screen.
+All requests go through one wrapper, [`Sources/Sealed/NetworkPolicy.swift`](Sources/Sealed/NetworkPolicy.swift),
+which allows HTTPS GET to `api.github.com` and refuses everything else before a socket
+opens. [`Tools/check-sealed.sh`](Tools/check-sealed.sh) fails the build if network code
+appears anywhere else or the allowlist changes. On-device speech recognition may
+download Apple's language model through macOS the first time you use captions.
 
-Original captures and source movies are never modified. Both editors support
-undo, redo, and native full screen.
+**Removed from upstream**
 
-<details>
-<summary>See the video editor</summary>
-
-![BetterShot video editor with zoom controls, a clip timeline, and cut markers](bettershot-landing/public/features/video-editor-dark.webp)
-
-</details>
-
-## Getting started
-
-1. Open BetterShot and allow screen capture. Enable Accessibility for global shortcuts.
-2. Press `⌘⇧4` to capture a region, or `⌘⇧2` to open the capture and recording bar.
-   Your last area opens already selected: press Return to capture it again, or draw a new one.
-3. Use the floating preview to Copy, Save, Pin, or Edit.
-
-| Action | Shortcut |
-| --- | --- |
-| Region screenshot | `⌘⇧4` |
-| Capture previous region again | `⌘⇧1` |
-| Fullscreen screenshot | `⌘⇧3` |
-| Capture and recording bar | `⌘⇧2` |
-| Recording options | `⌘⇧5` |
-| OCR text scan | `⌘⇧O` |
-| Color picker | `⌘⇧C` |
-
-Change or add bindings in **Settings > Shortcuts**. Extra actions, such as
-Capture Region & Pin or Edit Clipboard Image, start unassigned.
-
-Set the background, padding, corner radius, and shadow for new captures in
-**Settings > General > Default Look**.
-
-### Scrolling capture
-
-Capture a page or list that is taller than the screen. Choose
-**Scrolling Capture** in the menu bar popover or **Scroll** in the capture bar
-(`⌘⇧2`), or assign a shortcut in **Settings > Shortcuts**. Drag over the
-scrollable content, then scroll down through it as usual. A compact bar beside
-the area shows the stitched size, with a live preview next to the area when
-there is room. Choose **Auto Scroll** to scroll down automatically, and click it
-again (it reads **Scrolling…**) to go back to scrolling by hand. Click **Stop**, or
-trigger Scrolling Capture again, to send the image to the capture preview. The
-**×** button or Escape discards it.
-
-Fixed headers and scrollbars are detected and left out of the joins. Each join
-redraws the overlap from the newest frame, and Stop takes one last frame at the
-end of the page, so content that fades in as it scrolls into view is captured
-fully drawn. Auto Scroll
-needs Accessibility and finishes at the bottom of the page; either mode finishes
-at 30,000 pixels. If a join is missed, scroll back up a little and continue.
-
-Vision alignment, automatic scrolling, frame analysis, and the live preview are
-adapted from [MacShot](https://github.com/sw33tLie/macshot); its GPLv3 notice is
-bundled in [Resources/Licenses/MacShot.txt](Resources/Licenses/MacShot.txt).
-
-### Where files go
-
-New installs save normal screenshots to the configured folder immediately
-(Desktop by default). Change **Automatically save screenshots to this folder**
-under **Settings > General > Saving** to keep captures private until you choose
-Save or Export. Upgrades keep your previous saving behavior, including leaving
-automatic saving off if you had never enabled it.
-
-A screenshot or recording is named once, when it is taken, and Copy, Save, Export, Share, and
-drag-out all reuse that name, including any dots in a custom template.
-Video saves finish copying or converting before replacing an existing file;
-simultaneous saves with the same name get separate numbered files.
-
-- **Copy** puts the image on the clipboard without creating another export. If the capture was already saved automatically, that file remains.
-- **Save** writes to your configured folder. In the editor, later saves update the same file.
-- **Export** asks for a new destination.
-
-Explicit Capture & Copy, Edit, and Pin shortcuts bypass automatic saving.
-The preview and editor remain available after an automatic save; dismissing or
-copying the preview does not delete the saved file. **Keep screenshot previews
-open** works whether automatic saving is on or off. Failed saves keep the
-capture available for retry.
-General > Saving also lets you customize file names with templates such as
-`standup-{date}-{counter:3}`.
-
-### Permissions
-
-| Permission | Used for |
-| --- | --- |
-| Screen & System Audio Recording | Screenshots, recordings, and system audio |
-| Accessibility | Global shortcuts and Notch Mode hold-to-capture |
-| Input Monitoring | Cursor effects and shortcut overlays. Plain typing is never recorded. |
-| Microphone | Voice in recordings and voice notes |
-| Camera | Camera recording |
-
-Manage access in **System Settings > Privacy & Security**. If capture or
-shortcuts still fail after granting access, quit and reopen BetterShot.
-
-## Notch Mode
-
-Turn it on in **Settings > General > Capture Mode**. Normal Mode stays the default.
-
-- **Shelf.** Previews, recordings, OCR text, and picked colors appear in a black shelf at the top of the screen, filtered by All, Text, Images, Videos, or Colors.
-- **Hold to capture.** Hold Control and drag to screenshot an area. Change the key or switch to Draw on screen in **Settings > Shortcuts > Notch Capture Gesture**.
-- **Quick edit.** Click an image to draw, blur, crop, or add a background right below the notch.
-- **Voice notes.** Tap the microphone in the quick editor to talk while you annotate. Transcription runs on your Mac with no cloud fallback.
-- **History.** Copied hex colors are kept by default. Copied text is opt-in under **Settings > General > Notch Shelf**, capped at 50 entries, and skips content that apps mark as private.
-
-Recording controls always stay in the floating bar. On Macs without a notch,
-the shelf appears as a floating panel at the top center of the screen.
-
-## Cloud sharing
-
-Sharing is optional and uses a Cloudflare R2 bucket you own.
-
-1. Create an R2 bucket with a public URL and an
-   [API token](https://developers.cloudflare.com/r2/api/tokens/) with
-   Object Read & Write access to that bucket.
-2. Enter your credentials in **Settings > Sharing** and click **Test Connection**.
-   A successful test turns on **Upload when I share**; while it is off, Share
-   uploads nothing.
-3. Click **Share** on any capture to upload it and copy the link.
-
-Credentials are stored in your login Keychain. Links open a viewer on
-`bettershot.site` by default. Turn on **Copy direct file links** to get the raw
-file URL instead. Anyone with a link can view it. Outside of sharing, BetterShot
-only goes online to check GitHub for updates.
-
-## Automation
-
-Trigger captures from Shortcuts, Raycast, Alfred, or the terminal:
-
-```bash
-open 'bettershot://capture/region'
-```
-
-Routes: `capture/region`, `capture/fullscreen`, `capture/window`,
-`capture/scroll`, `ocr`, `color-picker`, `record`, `settings`.
+- Cloud sharing to a Cloudflare R2 bucket: the uploader, credential store, share
+  manifest, share-link generation and the Sharing settings tab. Share now opens the
+  macOS share sheet.
+- The self-installing updater that downloaded a DMG from GitHub, mounted it and
+  replaced the app. The update check now shows the release notes and opens the
+  release page in your browser. It never downloads anything.
+- The project website, the web share viewer, the upstream author's social links and
+  the AI assistant configuration files.
 
 ## Build from source
 
-Requires Xcode 26 and [XcodeGen](https://github.com/yonaskolb/XcodeGen).
+Requirements: an Apple silicon Mac on macOS 26 or later with the Command Line Tools
+(`xcode-select --install`). Xcode is not needed.
 
 ```bash
-brew install xcodegen
-git clone https://github.com/KartikLabhshetwar/better-shot.git
-cd better-shot
-make release
-open .build/Build/Products/Release/BetterShot.app
+git clone https://github.com/YahyaElghobashy/yayashot.git
+cd yayashot
+Tools/setup-signing.sh      # once: a stable local signing identity so permissions survive rebuilds
+./build.sh --install        # builds dist/YayaShot.app and copies it to /Applications
+Tools/check-sealed.sh dist/YayaShot.app
 ```
 
-`make release` builds unsigned, so no signing identity is needed. See
-[CONTRIBUTING.md](CONTRIBUTING.md) for Xcode setup, the code map, and tests.
+`./build.sh --dev` builds `YayaShot (Developer).app` with its own bundle id, so it can
+run next to the installed app. The build compiles against the macOS 26 SDK because the
+macOS 27 SDK turns SwiftUI property wrappers into macros whose compiler plugin ships
+only with Xcode.
 
-## Contributing
+Builds are signed with a self-signed identity, not notarized. A copy downloaded from
+the Releases page needs **System Settings > Privacy & Security > Open Anyway** the
+first time.
 
-Bug reports, fixes, docs, and accessibility feedback are all welcome. When
-[opening an issue](https://github.com/KartikLabhshetwar/better-shot/issues),
-include your macOS and BetterShot versions and steps to reproduce. Read the
-[contributor guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md)
-before opening a pull request.
+## Permissions
 
-Built by [Kartik Labhshetwar](https://x.com/code_kartik) and
-[contributors](https://github.com/KartikLabhshetwar/better-shot/graphs/contributors).
-If BetterShot helps you, consider [supporting its development](https://www.buymeacoffee.com/code_kartik).
+| Permission | Used for |
+| --- | --- |
+| Screen & System Audio Recording | Screenshots, recordings, system audio |
+| Microphone | Narration and voice screenshots |
+| Camera | The camera bubble, only when you turn it on |
+| Input Monitoring | Precise pointer motion for smooth cursor and click zooms, and the shortcut overlay. Plain typing is never recorded. |
+| Accessibility | Global shortcuts and Auto Scroll in scrolling capture |
+
+Recordings, screenshots, transcripts and settings stay in your chosen folders and in
+`~/Library` on this Mac.
+
+## Icon
+
+The icon is an alien camera on a ringed planet, in the same style as
+[Yaya's Space](https://github.com/YahyaElghobashy/yayas-space-mac). It was generated in
+one image-model pass with the Yaya's Space mark as a style reference, then cut out and
+placed on a paper tile. Sources are in [`Resources/Brand`](Resources/Brand); the
+alternate design is `AppIcon-Alternate-2048.png`. The onboarding images and demo
+videos in `Resources/Onboarding` are upstream's and still show BetterShot's interface.
+
+## License
+
+YayaShot is distributed under the same terms as BetterShot. The app is under the
+[BSD 3-Clause License](LICENSE), copyright Kartik Labhshetwar. Rendering code adapted
+from [Cap](https://github.com/CapSoftware/Cap) is AGPL-3.0-only and code adapted from
+Boring Notch and MacShot is GPLv3; their notices are bundled in
+[`Resources/Licenses`](Resources/Licenses) and inside the app. Because of those parts,
+anyone who distributes a YayaShot binary must also offer the corresponding source,
+which this repository does. Changes made for YayaShot are released under the same
+licenses as the files they change.
+
+"BetterShot" is the name of the upstream project; see [TRADEMARKS.md](TRADEMARKS.md).

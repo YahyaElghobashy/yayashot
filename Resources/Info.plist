@@ -2,46 +2,46 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleDevelopmentRegion</key>
-    <string>en</string>
-    <key>CFBundleExecutable</key>
-    <string>$(EXECUTABLE_NAME)</string>
-    <key>CFBundleIdentifier</key>
-    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-    <key>CFBundleInfoDictionaryVersion</key>
-    <string>6.0</string>
-    <key>CFBundleName</key>
-    <string>BetterShot</string>
-    <key>CFBundlePackageType</key>
-    <string>APPL</string>
-    <key>CFBundleShortVersionString</key>
-    <string>$(MARKETING_VERSION)</string>
-    <key>CFBundleVersion</key>
-    <string>$(CURRENT_PROJECT_VERSION)</string>
-    <key>LSMinimumSystemVersion</key>
-    <string>$(MACOSX_DEPLOYMENT_TARGET)</string>
-    <key>LSUIElement</key>
-    <true/>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleURLName</key>
-            <string>com.bettershot.url</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>bettershot</string>
-            </array>
-        </dict>
-    </array>
-    <key>NSInputMonitoringUsageDescription</key>
-    <string>BetterShot uses input monitoring for precise pointer motion during recordings and, when enabled, shortcut and special-key overlays. Plain typing is never recorded.</string>
-    <key>NSCameraUsageDescription</key>
-    <string>BetterShot shows your camera in a floating bubble when you turn on the face cam, so your face appears in the recording.</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>BetterShot uses your microphone when you start a voice screenshot or enable recording narration.</string>
-    <key>NSScreenCaptureUsageDescription</key>
-    <string>BetterShot needs screen recording access to capture screenshots and record your screen.</string>
-    <key>NSSpeechRecognitionUsageDescription</key>
-    <string>BetterShot transcribes voice screenshots and recording captions on your Mac.</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>YayaShot</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.yahyaelghobashy.yayashot.url</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>yayashot</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>YayaShot shows your camera in a floating bubble when you turn on the face cam, so your face appears in the recording.</string>
+	<key>NSInputMonitoringUsageDescription</key>
+	<string>YayaShot uses input monitoring for precise pointer motion during recordings and, when enabled, shortcut and special-key overlays. Plain typing is never recorded.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>YayaShot uses your microphone when you start a voice screenshot or enable recording narration.</string>
+	<key>NSScreenCaptureUsageDescription</key>
+	<string>YayaShot needs screen recording access to capture screenshots and record your screen.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>YayaShot transcribes voice screenshots and recording captions on your Mac.</string>
 </dict>
 </plist>

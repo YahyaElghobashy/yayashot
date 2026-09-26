@@ -1,9 +1,26 @@
 # Changelog
 
-All notable changes to Better Shot will be documented in this file.
+All notable changes to YayaShot are documented here. Entries from 0.5.7 down are
+upstream BetterShot's history, kept as released.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.0.0] - 2026-09-27
+
+YayaShot's first release: a sealed, rebranded build of BetterShot 0.5.7.
+
+### Removed
+
+- **Cloud sharing.** The Cloudflare R2 uploader, credential store, share links and the Sharing settings tab are gone. Share on a capture preview now opens the macOS share sheet.
+- **Self-installing updates.** The app no longer downloads a DMG and replaces itself.
+- The upstream website and web share viewer, the author's social links, and the AI assistant configuration files.
+
+### Changed
+
+- **Notify-only update check.** Settings > About checks this repository's releases and shows when upstream BetterShot ships a new version, with the release notes and a link to the release page. The check at launch is off by default. All network access goes through one GET-only wrapper limited to `api.github.com`.
+- **New name and icon.** YayaShot, with an alien-camera icon and a matching menu bar glyph. The URL scheme is `yayashot://`, bundle id `com.yahyaelghobashy.yayashot`.
+- **Builds without Xcode.** `build.sh` compiles with the Command Line Tools and signs with a stable local identity so permissions survive rebuilds.
 
 ## [0.5.7] - 2026-09-25
 

@@ -522,7 +522,7 @@ nonisolated final class RecordingStudioExporter: @unchecked Sendable {
 
     private static func temporaryOutputURL(container: VideoExportContainer) -> URL {
         let directory = URL(fileURLWithPath: NSTemporaryDirectory())
-            .appendingPathComponent("BetterShot", isDirectory: true)
+            .appendingPathComponent("YayaShot", isDirectory: true)
             .appendingPathComponent("StudioExports", isDirectory: true)
         try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         return directory.appendingPathComponent("\(UUID().uuidString).\(container.fileExtension)")

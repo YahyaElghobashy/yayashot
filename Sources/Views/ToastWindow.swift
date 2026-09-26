@@ -30,7 +30,7 @@ final class ToastWindow {
         let hostingView = NSHostingView(rootView: toastView)
 
         let panel = Self.makePanel(hostingView: hostingView)
-        panel.identifier = NSUserInterfaceItemIdentifier("BetterShot.Toast")
+        panel.identifier = NSUserInterfaceItemIdentifier("YayaShot.Toast")
         guard let screen = preferredScreen ?? NSScreen.main ?? NSScreen.screens.first else { return }
         let origin = Self.origin(for: panel.frame.size, in: screen.visibleFrame)
         let x = origin.x

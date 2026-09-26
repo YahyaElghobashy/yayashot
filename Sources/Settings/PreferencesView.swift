@@ -68,7 +68,7 @@ struct PreferencesView: View {
                             Image(nsImage: NSImage(named: "AppIcon") ?? NSApp.applicationIconImage)
                                 .resizable().frame(width: 36, height: 36)
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("BetterShot").font(.headline).foregroundStyle(.primary)
+                                Text("YayaShot").font(.headline).foregroundStyle(.primary)
                                 Text("About & Updates").font(.caption).foregroundStyle(.secondary)
                             }
                         }
@@ -264,7 +264,7 @@ struct GeneralSettingsTab: View {
                 ))
                 Toggle("Show the capture bar at launch", isOn: $showCaptureBarAtLaunch)
                 if loginStatus == .requiresApproval {
-                    Text("Allow BetterShot in System Settings → General → Login Items & Extensions.")
+                    Text("Allow YayaShot in System Settings → General → Login Items & Extensions.")
                         .font(.callout).foregroundStyle(.secondary)
                 }
                 if let loginError {
@@ -310,7 +310,7 @@ struct GeneralSettingsTab: View {
             } header: {
                 Text("Appearance")
             } footer: {
-                Text("Hide the Dock icon to run BetterShot from the menu bar. The menu bar icon stays visible while the Dock icon is hidden. System theme follows macOS.")
+                Text("Hide the Dock icon to run YayaShot from the menu bar. The menu bar icon stays visible while the Dock icon is hidden. System theme follows macOS.")
             }
 
             Section("Editor") {
@@ -479,7 +479,7 @@ struct GeneralSettingsTab: View {
                     isConfirmingReset = true
                 }
             } footer: {
-                Text("Puts everything on this page, including the default look, back the way BetterShot shipped.")
+                Text("Puts everything on this page, including the default look, back the way YayaShot shipped.")
             }
         }
         .formStyle(.grouped)
@@ -527,7 +527,7 @@ struct GeneralSettingsTab: View {
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = false
         panel.prompt = "Save Here"
-        panel.message = "Choose where BetterShot saves new screenshots and recordings."
+        panel.message = "Choose where YayaShot saves new screenshots and recordings."
         panel.directoryURL = URL(fileURLWithPath: saveDir)
         if panel.runModal() == .OK, let url = panel.url {
             saveDir = url.path
