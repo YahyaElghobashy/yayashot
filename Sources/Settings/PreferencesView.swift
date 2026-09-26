@@ -1218,7 +1218,7 @@ struct ShortcutSettingsTab: View {
             }
             ForEach(ShortcutService.Group.allCases, id: \.self) { group in
                 let actions = ShortcutService.Action.allCases.filter {
-                    $0.group == group && (category == nil || category == group)
+                    $0 != .imageShare && $0 != .videoShare && $0.group == group && (category == nil || category == group)
                         && (search.isEmpty || $0.title.localizedCaseInsensitiveContains(search)
                             || group.title.localizedCaseInsensitiveContains(search))
                 }
@@ -1485,11 +1485,26 @@ struct AboutTab: View {
 
                 section("Project") {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("YayaShot is a sealed, rebranded build of BetterShot by Kartik Labhshetwar, released under the BSD 3-Clause License with parts under AGPLv3 and GPLv3 (see Licenses in the app bundle). It is not affiliated with or endorsed by BetterShot.")
+                        Text("YayaShot is a sealed, rebranded build of BetterShot by Kartik Labhshetwar. It is not affiliated with or endorsed by BetterShot.")
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
 
-                        Link("YayaShot on GitHub", destination: URL(string: "https://github.com/YahyaElghobashy/yayashot")!)
+                        Text("The app as a whole is distributed under the GNU Affero General Public License v3, because it includes code adapted from Cap (AGPL-3.0) and from Boring Notch and MacShot (GPLv3). Files from BetterShot remain available under the BSD 3-Clause License and the vendored packages under MIT. This program comes with ABSOLUTELY NO WARRANTY. The complete source code is on GitHub.")
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        Text("Copyright © 2026 Kartik Labhshetwar (BetterShot), Cap Software, Inc. (Cap), the Boring Notch and MacShot authors, and Yahya Elghobashy (YayaShot changes).")
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        Button("Licenses\u{2026}") {
+                            if let folder = Bundle.main.resourceURL?.appendingPathComponent("Licenses") {
+                                NSWorkspace.shared.open(folder)
+                            }
+                        }
+
+                        Link("Source Code on GitHub", destination: URL(string: "https://github.com/YahyaElghobashy/yayashot")!)
                         Link("Upstream BetterShot on GitHub", destination: URL(string: "https://github.com/KartikLabhshetwar/better-shot")!)
                     }
                 }

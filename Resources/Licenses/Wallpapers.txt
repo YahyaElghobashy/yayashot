@@ -1,0 +1,10 @@
+YayaShot bundled wallpapers (Resources/Backgrounds/mac)
+
+The seven images shipped as "macOS" wallpapers in upstream BetterShot had no
+recorded license or source. YayaShot replaced them on 2026-09-27 with original
+abstract gradients generated locally with ImageMagick (Shepards sparse-color
+interpolation and a Gaussian blur). File names were kept so saved projects keep
+resolving their background.
+
+Copyright 2026 Yahya Elghobashy. Released under CC0 1.0 (public domain dedication):
+https://creativecommons.org/publicdomain/zero/1.0/

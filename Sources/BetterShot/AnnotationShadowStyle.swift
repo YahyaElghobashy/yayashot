@@ -2,7 +2,6 @@
 //  AnnotationShadowStyle.swift
 //  BetterShot
 //
-//  Created by Codex on 02/08/26.
 //
 
 import CoreGraphics

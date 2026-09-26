@@ -129,7 +129,7 @@ final class AppUpdater {
         let notes = body.count > 600 ? String(body.prefix(600)) + "…" : body
         let fallback = URL(string: "https://github.com/\(repository)/releases")!
         var page = (json["html_url"] as? String).flatMap(URL.init(string:)) ?? fallback
-        if page.host?.lowercased() != "github.com" { page = fallback }
+        if page.scheme?.lowercased() != "https" || page.host?.lowercased() != "github.com" { page = fallback }
         return Release(version: version, title: title, notes: notes, page: page)
     }
 

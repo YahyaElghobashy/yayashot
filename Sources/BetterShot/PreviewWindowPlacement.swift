@@ -2,7 +2,6 @@
 //  PreviewWindowPlacement.swift
 //  BetterShot
 //
-//  Created by Codex on 30/04/26.
 //
 
 import AppKit

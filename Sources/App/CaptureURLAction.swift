@@ -1,8 +1,11 @@
 import Foundation
 
+/// yayashot:// automation routes. Every route that captures needs an on-screen
+/// selection or click. YayaShot removed upstream's `capture/fullscreen`, which
+/// let any local process take a silent full-screen screenshot through the
+/// app's Screen Recording permission and read it from the clipboard.
 nonisolated enum CaptureURLAction: String, CaseIterable {
     case region = "capture/region"
-    case fullscreen = "capture/fullscreen"
     case window = "capture/window"
     case scrollCapture = "capture/scroll"
     case recording = "record"

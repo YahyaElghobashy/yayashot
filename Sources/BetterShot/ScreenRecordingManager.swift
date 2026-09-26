@@ -2,7 +2,6 @@
 //  ScreenRecordingManager.swift
 //  BetterShot
 //
-//  Created by Codex on 01/05/26.
 //
 //  Recording engine invariants:
 //  - A recording that has started is never silently discarded. Stream errors
@@ -601,9 +600,9 @@ final class ScreenRecordingManager {
         alert.alertStyle = .warning
         alert.messageText = "Screen Recording permission needed"
         alert.informativeText = """
-        BetterShot can't record until it's allowed under Privacy & Security > \
+        YayaShot can't record until it's allowed under Privacy & Security > \
         Screen & System Audio Recording. After turning it on, quit and reopen \
-        BetterShot - macOS applies the permission on relaunch.
+        YayaShot - macOS applies the permission on relaunch.
         """
         alert.addButton(withTitle: "Open System Settings")
         alert.addButton(withTitle: "Cancel")

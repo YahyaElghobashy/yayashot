@@ -18,7 +18,7 @@ import Foundation
 
 enum NetworkPolicy {
     /// Hosts YayaShot may contact. Keep this list in step with README.md.
-    static let allowedHosts: Set<String> = ["api.github.com"]
+    nonisolated static let allowedHosts: Set<String> = ["api.github.com"]
 
     enum Refusal: LocalizedError {
         case notHTTPS
@@ -46,6 +46,25 @@ enum NetworkPolicy {
         return URLSession(configuration: configuration)
     }()
 
+    /// True for https URLs whose host is on the allowlist.
+    nonisolated static func isAllowed(_ url: URL?) -> Bool {
+        guard let url, url.scheme?.lowercased() == "https", let host = url.host?.lowercased() else { return false }
+        return allowedHosts.contains(host)
+    }
+
+    /// Refuses any HTTP redirect that leaves the allowlist, so the policy holds
+    /// for every hop and not only for the first request.
+    nonisolated private final class RedirectGuard: NSObject, URLSessionTaskDelegate, Sendable {
+        // Completion-handler form on purpose: the async variant of this
+        // delegate method crashes Swift 6.4's SIL generation for the @objc thunk.
+        nonisolated func urlSession(_ session: URLSession, task: URLSessionTask,
+                                    willPerformHTTPRedirection response: HTTPURLResponse,
+                                    newRequest request: URLRequest,
+                                    completionHandler: @escaping @Sendable (URLRequest?) -> Void) {
+            completionHandler(NetworkPolicy.isAllowed(request.url) ? request : nil)
+        }
+    }
+
     /// Performs an allowlisted HTTPS GET and returns the body and status.
     static func get(_ url: URL, accept: String = "application/vnd.github+json") async throws -> (Data, HTTPURLResponse) {
         guard url.scheme?.lowercased() == "https" else { throw Refusal.notHTTPS }
@@ -55,8 +74,8 @@ enum NetworkPolicy {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue(accept, forHTTPHeaderField: "Accept")
-        let (data, response) = try await session.data(for: request)
-        guard let http = response as? HTTPURLResponse else { throw Refusal.unexpectedResponse }
+        let (data, response) = try await session.data(for: request, delegate: RedirectGuard())
+        guard let http = response as? HTTPURLResponse, isAllowed(http.url) else { throw Refusal.unexpectedResponse }
         return (data, http)
     }
 }

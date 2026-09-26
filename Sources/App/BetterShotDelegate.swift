@@ -69,8 +69,6 @@ final class BetterShotDelegate: NSObject, NSApplicationDelegate {
                 switch action {
                 case .region:
                     await CaptureOrchestrator.shared.performCapture(.region, on: screen)
-                case .fullscreen:
-                    await CaptureOrchestrator.shared.performCapture(.fullscreen, on: screen)
                 case .window:
                     await CaptureOrchestrator.shared.performCapture(.window, on: screen)
                 case .scrollCapture:

@@ -2,7 +2,6 @@
 //  AnnotationEditorWindow.swift
 //  BetterShot
 //
-//  Created by Codex on 27/04/26.
 //
 
 import AppKit

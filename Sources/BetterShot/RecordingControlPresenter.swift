@@ -2,7 +2,6 @@
 //  RecordingControlPresenter.swift
 //  BetterShot
 //
-//  Created by Codex on 01/05/26.
 //
 //  The in-session mode of the floating bar: elapsed time and the transport
 //  controls for the recording that's running. It shares its panel and chrome

@@ -53,7 +53,7 @@ YayaShot makes exactly one kind of network request, and only when you ask for it
 All requests go through one wrapper, [`Sources/Sealed/NetworkPolicy.swift`](Sources/Sealed/NetworkPolicy.swift),
 which allows HTTPS GET to `api.github.com` and refuses everything else before a socket
 opens. [`Tools/check-sealed.sh`](Tools/check-sealed.sh) fails the build if network code
-appears anywhere else or the allowlist changes. On-device speech recognition may
+appears anywhere else, a process other than `screencapture` is launched, or the allowlist changes. `build.sh` runs it before compiling and again on the finished app. On-device speech recognition may
 download Apple's language model through macOS the first time you use captions.
 
 **Removed from upstream**
@@ -64,6 +64,9 @@ download Apple's language model through macOS the first time you use captions.
 - The self-installing updater that downloaded a DMG from GitHub, mounted it and
   replaced the app. The update check now shows the release notes and opens the
   release page in your browser. It never downloads anything.
+- The `yayashot://capture/fullscreen` link, which let any local process take a silent
+  full-screen screenshot through YayaShot's Screen Recording permission. The remaining
+  links all need an on-screen selection or click.
 - The project website, the web share viewer, the upstream author's social links and
   the AI assistant configuration files.
 
@@ -110,16 +113,26 @@ one image-model pass with the Yaya's Space mark as a style reference, then cut o
 placed on a paper tile. Sources are in [`Resources/Brand`](Resources/Brand); the
 alternate design is `AppIcon-Alternate-2048.png`. The onboarding images and demo
 videos in `Resources/Onboarding` are upstream's and still show BetterShot's interface.
+The bundled wallpapers are new: upstream's "macOS" set had no recorded license, so it
+was replaced with original gradients under the same file names.
 
 ## License
 
-YayaShot is distributed under the same terms as BetterShot. The app is under the
-[BSD 3-Clause License](LICENSE), copyright Kartik Labhshetwar. Rendering code adapted
-from [Cap](https://github.com/CapSoftware/Cap) is AGPL-3.0-only and code adapted from
-Boring Notch and MacShot is GPLv3; their notices are bundled in
-[`Resources/Licenses`](Resources/Licenses) and inside the app. Because of those parts,
-anyone who distributes a YayaShot binary must also offer the corresponding source,
-which this repository does. Changes made for YayaShot are released under the same
-licenses as the files they change.
+The YayaShot app as a whole is distributed under the
+[GNU Affero General Public License v3](Resources/Licenses/Cap.txt), because it combines
+code adapted from [Cap](https://github.com/CapSoftware/Cap) (AGPL-3.0-only, rendering and
+editor timeline code) with code adapted from Boring Notch and
+[MacShot](https://github.com/sw33tLie/macshot) (GPLv3). The files that come from
+BetterShot remain available under its [BSD 3-Clause License](LICENSE), copyright
+Kartik Labhshetwar, and the vendored packages (DockProgress, DynamicNotchKit, TourKit)
+under MIT. Every notice is in [`Resources/Licenses`](Resources/Licenses), is bundled
+inside the app, and opens from **Settings > About > Licenses**.
+
+This repository is the corresponding source for every YayaShot release: each release
+is built from the tag of the same version. YayaShot's own changes are offered under
+the BSD 3-Clause License, like the base. The bundled wallpapers are original and
+released under CC0 ([details](Resources/Licenses/Wallpapers.txt)).
+
+YayaShot comes with ABSOLUTELY NO WARRANTY.
 
 "BetterShot" is the name of the upstream project; see [TRADEMARKS.md](TRADEMARKS.md).

@@ -3,6 +3,7 @@ Source: https://github.com/sw33tLie/macshot
 Source revision: 89219e1 (local checkout)
 Author: sw33tLie and MacShot contributors
 License: GNU General Public License, version 3 (GPLv3), as stated in MacShot's website/index.html.
+Verified 2026-09-27 for YayaShot: github.com/sw33tLie/macshot carries a GPL-3.0 LICENSE file.
 
 Adapted on 2026-09-25 for BetterShot: Vision registration, settled-frame capture,
 auto-scroll, ScrollFrameAnalyzer, preview panel and HUD placement. BetterShot

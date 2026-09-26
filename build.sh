@@ -53,6 +53,9 @@ else
     SDK_FLAGS=()
 fi
 
+# The seal is checked before anything compiles and again on the finished bundle.
+Tools/check-sealed.sh
+
 BUILD="build/$([[ $DEV == 1 ]] && echo dev || echo release)"
 MODS="$BUILD/modules"
 mkdir -p "$MODS" dist
@@ -117,7 +120,8 @@ def fix(v):
 p = fix(p)
 p.update({"CFBundleExecutable": exe, "CFBundleIdentifier": bid, "CFBundleName": name,
           "CFBundleDisplayName": name, "CFBundleShortVersionString": ver, "CFBundleVersion": build,
-          "CFBundlePackageType": "APPL", "CFBundleIconFile": "AppIcon", "LSMinimumSystemVersion": "26.0"})
+          "CFBundlePackageType": "APPL", "CFBundleIconFile": "AppIcon", "LSMinimumSystemVersion": "26.0",
+          "NSHumanReadableCopyright": "Based on BetterShot, copyright 2026 Kartik Labhshetwar. Distributed under the GNU AGPL v3 with BSD 3-Clause, GPLv3 and MIT parts; see Licenses in Settings > About."})
 with open(out, "wb") as f:
     plistlib.dump(p, f)
 PY
@@ -142,6 +146,7 @@ else
     echo "▸ signed ad-hoc (run Tools/setup-signing.sh for a stable identity)"
 fi
 /usr/bin/codesign --verify --deep --strict "$APP"
+Tools/check-sealed.sh "$APP"
 
 rm -rf "dist/$APP_NAME.app"
 ditto "$APP" "dist/$APP_NAME.app"

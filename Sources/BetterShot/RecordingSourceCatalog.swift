@@ -2,7 +2,6 @@
 //  RecordingSourceCatalog.swift
 //  BetterShot
 //
-//  Created by Codex on 05/05/26.
 //
 
 import AppKit

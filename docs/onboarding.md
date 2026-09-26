@@ -10,7 +10,7 @@ Updated September 10, 2026 for 0.5.1.
    or Restricted. Denied access and previous system requests lead to Settings;
    undecided microphone/camera requests can be retried. Errors stay beside the action.
    No permission or recording input is enabled automatically.
-3. **First Capture:** find the menu-bar clover, see the current capture-bar shortcut, then
+3. **First Capture:** find the YayaShot camera in the menu bar, see the current capture-bar shortcut, then
    open the shared bar or edit a separate practice image in the real editor.
 
 Back, Skip Setup, and Continue remain in a persistent footer. The 760 × 680 window

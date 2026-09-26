@@ -2,7 +2,6 @@
 //  AnnotationBackground.swift
 //  BetterShot
 //
-//  Created by Codex on 28/04/26.
 //
 
 import AppKit

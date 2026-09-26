@@ -2,7 +2,6 @@
 //  ScreenshotHistoryStore.swift
 //  BetterShot
 //
-//  Created by Codex on 01/05/26.
 //
 
 import AppKit

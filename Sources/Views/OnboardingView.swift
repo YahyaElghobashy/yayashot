@@ -173,7 +173,7 @@ struct OnboardingView: View {
                     .padding(12).background(Color.primary.opacity(0.06), in: RoundedRectangle(cornerRadius: 10))
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Find the clover in your menu bar").font(.headline)
+                    Text("Find the YayaShot camera in your menu bar").font(.headline)
                     Text("Your captures and tools are always there.")
                         .font(.callout).foregroundStyle(.secondary)
                 }
@@ -184,8 +184,8 @@ struct OnboardingView: View {
             if permissions.status(.accessibility) != .allowed || permissions.shortcutsNeedRestart {
                 HStack(alignment: .top, spacing: 12) {
                     Text(permissions.shortcutsNeedRestart
-                         ? "Reopen YayaShot to activate shortcuts. The clover menu works now."
-                         : "Shortcuts need Accessibility access. The clover menu works without it.")
+                         ? "Reopen YayaShot to activate shortcuts. The menu bar icon works now."
+                         : "Shortcuts need Accessibility access. The menu bar icon works without it.")
                         .font(.callout).foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                     Spacer(minLength: 0)

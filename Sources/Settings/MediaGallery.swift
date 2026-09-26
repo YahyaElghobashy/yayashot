@@ -210,9 +210,6 @@ struct MediaGalleryContent: View {
                 Section("On this Mac") {
                     ForEach(MediaGalleryCategory.local, content: sidebarRow)
                 }
-                Section("Cloud Shares") {
-                    ForEach(MediaGalleryCategory.shared, content: sidebarRow)
-                }
             }
             .listStyle(.sidebar)
             .scrollContentBackground(.hidden)
