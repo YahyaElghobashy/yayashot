@@ -30,6 +30,7 @@ final class OnboardingWindowController: NSObject, NSWindowDelegate {
 
     func finish(openCaptureBar: Bool = false, recordingOptions: Bool = false) {
         OnboardingState.markSeen()
+        SuiteFlags.markOnboardingDone()
         window?.close()
         if openCaptureBar { RecordingBarPresenter.shared.showPicker(recordingOptions: recordingOptions) }
     }
@@ -37,6 +38,7 @@ final class OnboardingWindowController: NSObject, NSWindowDelegate {
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         // Explicit close dismisses the guide; quitting for a permission restart does not.
         OnboardingState.markSeen()
+        SuiteFlags.markOnboardingDone()
         return true
     }
 

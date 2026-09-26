@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Resources/Brand/AppIcon-1024.png" width="128" height="128" alt="YayaShot icon: an alien camera on a ringed planet">
+  <img src="Resources/Brand/AppIcon-1024.png" width="128" height="128" alt="YayaShot icon: a cartoon alien tech camera with a green plasma dome">
 </p>
 
 <h1 align="center">YayaShot</h1>
@@ -107,14 +107,22 @@ Recordings, screenshots, transcripts and settings stay in your chosen folders an
 
 ## Icon
 
-The icon is an alien camera on a ringed planet, in the same style as
-[Yaya's Space](https://github.com/YahyaElghobashy/yayas-space-mac). It was generated in
-one image-model pass with the Yaya's Space mark as a style reference, then cut out and
-placed on a paper tile. Sources are in [`Resources/Brand`](Resources/Brand); the
-alternate design is `AppIcon-Alternate-2048.png`. The onboarding images and demo
-videos in `Resources/Onboarding` are upstream's and still show BetterShot's interface.
+The icon is an alien tech camera in a Rick and Morty-inspired cartoon style, generated in
+one image-model pass and placed on a dark space tile by
+[`Tools/MakeIcons.swift`](Tools/MakeIcons.swift), which also draws the menu bar glyph as
+vector art. Sources and two alternate concepts are in [`Resources/Brand`](Resources/Brand);
+the first 1.0.0 icon is kept in `Resources/Brand/v1-alien-eye`. The onboarding images and
+demo videos in `Resources/Onboarding` are upstream's and still show BetterShot's interface.
 The bundled wallpapers are new: upstream's "macOS" set had no recorded license, so it
 was replaced with original gradients under the same file names.
+
+## Yaya Suite
+
+YayaShot is part of [Yaya Suite](https://github.com/YahyaElghobashy), the one-installer
+bundle for Yaya's Space, Deck, Dailies and YayaShot. The installer talks to the app through
+three launch flags: `--permissions-json` (prints permission state and exits),
+`--login-item on|off` and `--onboarding` (replays the tour and writes
+`~/Library/Application Support/YayaSuite/handoff/yayashot.done` when it finishes).
 
 ## License
 

@@ -6,6 +6,17 @@ upstream BetterShot's history, kept as released.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-09-27
+
+### Changed
+
+- **New icon.** The whole icon is now an alien tech camera, drawn in a Rick and Morty-inspired cartoon style: a teal gadget with a bubbling plasma dome, a bent antenna and a portal-green lens, on a dark space tile.
+- **New menu bar icon.** A vector glyph of the same camera, with its dome, antenna and lens, so it stays recognisable at menu bar size in light and dark mode.
+
+### Added
+
+- **Yaya Suite support.** `--permissions-json` reports Screen Recording, Accessibility, Microphone, Camera, Input Monitoring and the login item as one JSON line and exits before any window appears. `--login-item on|off` registers or removes the login item. `--onboarding` replays the welcome tour and tells the installer when it is done. All of it is local; nothing touches the network.
+
 ## [1.0.0] - 2026-09-27
 
 YayaShot's first release: a sealed, rebranded build of BetterShot 0.5.7.

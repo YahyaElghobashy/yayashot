@@ -30,8 +30,8 @@ final class BetterShotDelegate: NSObject, NSApplicationDelegate {
         }
         // Present after launch setup; never put permission prompts in the launch path.
         DispatchQueue.main.async {
-            if OnboardingState.shouldPresent() {
-                OnboardingWindowController.shared.show()
+            if SuiteFlags.suiteOnboarding || OnboardingState.shouldPresent() {
+                OnboardingWindowController.shared.show(replay: SuiteFlags.suiteOnboarding)
             } else if ReleaseNotesWindowController.shared.show(onlyIfNew: true) {
                 // Keep the update notes in focus instead of also opening the capture bar.
             } else if UserDefaults.standard.object(forKey: AppPreferences.showCaptureBarAtLaunchKey) as? Bool ?? true {

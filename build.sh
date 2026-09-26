@@ -129,8 +129,10 @@ PY
 cp -R Resources/Backgrounds Resources/Onboarding Resources/Licenses "$APP/Contents/Resources/"
 cp CHANGELOG.md "$APP/Contents/Resources/"
 # Asset catalog replacement (no actool): the icon as .icns and the menu-bar
-# template image as plain PNGs, which NSImage(named:) finds by name.
+# template glyph as a vector PDF plus PNGs, which NSImage(named:) finds by name.
+# Regenerate them with `swift Tools/MakeIcons.swift`.
 cp Resources/Generated/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
+cp Resources/Generated/MenuBarIcon.pdf "$APP/Contents/Resources/MenuBarIcon.pdf"
 cp Resources/Generated/MenuBarIcon.png "$APP/Contents/Resources/MenuBarIcon.png"
 cp Resources/Generated/MenuBarIcon@2x.png "$APP/Contents/Resources/MenuBarIcon@2x.png"
 

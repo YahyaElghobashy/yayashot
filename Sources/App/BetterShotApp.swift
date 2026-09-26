@@ -6,6 +6,7 @@ struct BetterShotApp: App {
     @Environment(\.openWindow) var openWindow
 
     init() {
+        SuiteFlags.handleEarly()
         if ProcessInfo.processInfo.environment["BETTERSHOT_TESTING"] != "1" {
             let isNewInstall = OnboardingState.prepareForLaunch()
             AfterCaptureActions.prepareForLaunch(isNewInstall: isNewInstall)
