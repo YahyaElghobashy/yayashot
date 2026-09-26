@@ -44,3 +44,4 @@ scripts/
 # YayaShot build output
 /build/
 /dist/
+/release/
