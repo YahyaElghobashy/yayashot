@@ -191,7 +191,6 @@ final class RecordingStudioModel {
     /// Upload identity while sharing, so the UI can read the uploader's
     /// live progress and the history card mirrors the state.
     private(set) var shareItemID: UUID?
-    private var lastShareOptions: CloudUploadOptions?
 
     /// Format the audio-only export writes. Persisted so the round trip
     /// through an external tool keeps whatever that tool accepts.
@@ -2600,111 +2599,9 @@ final class RecordingStudioModel {
         CloudUploader.shared.canShare
     }
 
-    /// The Loom loop: render the current edits, cache the result as the
-    /// session's flattened deliverable, upload it, and copy the share
-    /// link - without leaving the Studio or touching a save panel.
-    func shareToCloud(options: CloudUploadOptions) {
-        guard !shareState.isBusy, !exportState.isExporting, isLoaded,
-              canShareToCloud else {
-            return
-        }
-        pause()
-        lastShareOptions = options
-        // Flush the draft first so the deliverable-invalidation in the
-        // debounced autosave can't race the file this render produces.
-        projectSaveTask?.cancel()
-        writeDraftNow()
-
-        // A fresh deliverable (e.g. sharing again without edits) skips
-        // the render and goes straight to upload.
-        let cachedDeliverable = freshDeliverableURL
-        let configuration = cachedDeliverable == nil ? makeExportConfiguration() : nil
-        let session = session
-        let renderedDocument = session == nil ? nil : currentDocument()
-        shareState = cachedDeliverable == nil ? .rendering(progress: 0) : .uploading
-
-        shareTask = Task { [weak self] in
-            // Bare (session-less) videos upload straight from the render's
-            // temp file; whatever happens, it must not outlive the share.
-            var temporaryUploadURL: URL?
-            defer {
-                if let temporaryUploadURL {
-                    try? FileManager.default.removeItem(at: temporaryUploadURL)
-                }
-            }
-            do {
-                let uploadURL: URL
-                if let cachedDeliverable {
-                    uploadURL = cachedDeliverable
-                } else if let configuration {
-                    let dockProgressID = DockExportProgressCoordinator.shared.start()
-                    let temporaryURL: URL
-                    do {
-                        temporaryURL = try await RecordingStudioExporter().export(configuration) { progress in
-                            Task { @MainActor [weak self] in
-                                DockExportProgressCoordinator.shared.update(dockProgressID, progress: progress)
-                                if case .rendering = self?.shareState {
-                                    self?.shareState = .rendering(progress: progress)
-                                }
-                            }
-                        }
-                        DockExportProgressCoordinator.shared.finish(dockProgressID)
-                    } catch {
-                        DockExportProgressCoordinator.shared.finish(dockProgressID)
-                        throw error
-                    }
-                    // From here the deferred cleanup owns the temp render;
-                    // once it moves into the session the delete is a
-                    // harmless no-op.
-                    temporaryUploadURL = temporaryURL
-
-                    // Session recordings keep the render as the flattened
-                    // deliverable, so history, preview, and sidecar mapping
-                    // all agree on what was shared.
-                    if let session {
-                        uploadURL = try session.installFinalVideo(
-                            movingFrom: temporaryURL,
-                            renderedFrom: renderedDocument
-                        )
-                    } else {
-                        uploadURL = temporaryURL
-                    }
-                } else {
-                    return
-                }
-
-                guard let self, !Task.isCancelled else { return }
-                self.shareState = .uploading
-                if let session {
-                    await ScreenshotHistoryStore.shared.importRecordingSession(session)
-                }
-                let itemID = self.historyItemID(for: session) ?? UUID()
-                self.shareItemID = itemID
-                let result = try await CloudUploader.shared.upload(
-                    itemID: itemID,
-                    fileURL: uploadURL,
-                    named: session.map(RecordingDeliverable.name(for:))
-                        ?? uploadURL.deletingPathExtension().lastPathComponent,
-                    title: options.trimmedTitleOrNil
-                )
-
-                NSPasteboard.general.clearContents()
-                NSPasteboard.general.setString(result.url, forType: .string)
-                if let session {
-                    ScreenshotHistoryStore.shared.setCloudURL(forSession: session, cloudURL: result.url)
-                } else {
-                    await ScreenshotHistoryStore.shared.setCloudURL(for: uploadURL, cloudURL: result.url)
-                }
-                self.shareState = .finished(result.url)
-            } catch is CancellationError {
-                self?.shareState = .idle
-            } catch RecordingStudioExporter.ExportError.cancelled {
-                self?.shareState = .idle
-            } catch {
-                self?.shareState = .failed(error.localizedDescription)
-            }
-        }
-    }
+    /// YayaShot: the upstream "render, upload, copy link" loop is removed with
+    /// cloud sharing. Export saves the video; Share on the preview card opens
+    /// the macOS share sheet.
 
     func cancelShare() {
         shareTask?.cancel()
@@ -2717,14 +2614,10 @@ final class RecordingStudioModel {
         }
     }
 
-    var canRetryShare: Bool {
-        lastShareOptions != nil
-    }
+    var canRetryShare: Bool { false }
 
     func retryShare() {
-        guard case .failed = shareState, let lastShareOptions else { return }
         shareState = .idle
-        shareToCloud(options: lastShareOptions)
     }
 
     func acknowledgeShareResult() {

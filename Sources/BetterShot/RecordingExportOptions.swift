@@ -4,7 +4,7 @@
 //
 //  Export settings are asked for at the moment of export rather than parked
 //  in a collapsed inspector section nobody opens. Mirrors the share flow in
-//  CloudUploadOptions.swift: a button opens a small options popover, and
+//  the upstream share button: a button opens a small options popover, and
 //  confirming remembers the choice as the default for next time.
 //
 

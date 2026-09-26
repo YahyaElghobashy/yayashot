@@ -5,11 +5,11 @@ import UniformTypeIdentifiers
 import ServiceManagement
 
 enum SettingsSection: String, CaseIterable, Identifiable {
-    case general, capture, overlay, recording, shortcuts, sharing, about
+    case general, capture, overlay, recording, shortcuts, about
 
     var id: String { rawValue }
 
-    static let preferenceGroup: [SettingsSection] = [.general, .capture, .overlay, .recording, .shortcuts, .sharing]
+    static let preferenceGroup: [SettingsSection] = [.general, .capture, .overlay, .recording, .shortcuts]
 
     var title: String {
         switch self {
@@ -18,7 +18,6 @@ enum SettingsSection: String, CaseIterable, Identifiable {
         case .overlay: "Overlay"
         case .recording: "Recording"
         case .shortcuts: "Shortcuts"
-        case .sharing: "Sharing"
         case .about: "About"
         }
     }
@@ -30,7 +29,6 @@ enum SettingsSection: String, CaseIterable, Identifiable {
         case .overlay: "macwindow.on.rectangle"
         case .recording: "video.fill"
         case .shortcuts: "keyboard"
-        case .sharing: "icloud.and.arrow.up"
         case .about: "info.circle"
         }
     }
@@ -42,7 +40,6 @@ enum SettingsSection: String, CaseIterable, Identifiable {
         case .overlay: Color(nsColor: .systemIndigo)
         case .recording: Color(nsColor: .systemRed)
         case .shortcuts: Color(nsColor: .systemPurple)
-        case .sharing: Color(nsColor: .systemBlue)
         case .about: Color(nsColor: .systemGray)
         }
     }
@@ -142,7 +139,6 @@ struct PreferencesView: View {
         case .overlay: OverlaySettingsTab()
         case .recording: RecordingSettingsTab()
         case .shortcuts: ShortcutSettingsTab()
-        case .sharing: SharingSettingsTab()
         case .about: AboutTab()
         }
     }
@@ -1445,6 +1441,7 @@ final class ShortcutRecorderNSView: NSView {
 
 struct AboutTab: View {
     private let updater = AppUpdater.shared
+    @State private var checksAutomatically = AppUpdater.checksAutomatically
 
     private var version: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
@@ -1465,32 +1462,35 @@ struct AboutTab: View {
 
                 section("Updates") {
                     updateContent
+                    Toggle("Check for updates when YayaShot starts", isOn: $checksAutomatically)
+                        .onChange(of: checksAutomatically) { _, value in
+                            AppUpdater.checksAutomatically = value
+                        }
+                    Text("Reads public release notes from GitHub. YayaShot never downloads or installs updates by itself.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    if let upstream = updater.upstreamRelease {
+                        upstreamNotice(upstream)
+                    }
                     Button("What’s New…") { ReleaseNotesWindowController.shared.show() }
                     Button("Take the Tour…") { OnboardingWindowController.shared.show(replay: true) }
                 }
 
+                section("Privacy") {
+                    Text("Recordings, screenshots, transcripts and settings stay on this Mac. The only network request YayaShot can make is the update check above, to api.github.com. Share opens the macOS share sheet, so a file leaves the Mac only through a service you pick.")
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+
                 section("Project") {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("BetterShot is open source. Issues, ideas and pull requests are all welcome.")
+                        Text("YayaShot is a sealed, rebranded build of BetterShot by Kartik Labhshetwar, released under the BSD 3-Clause License with parts under AGPLv3 and GPLv3 (see Licenses in the app bundle). It is not affiliated with or endorsed by BetterShot.")
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
 
-                        Link("View on GitHub", destination: URL(string: "https://github.com/KartikLabhshetwar/better-shot")!)
-                    }
-                }
-
-                section("Credits") {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Built by Kartik Labhshetwar.")
-                            .foregroundStyle(.secondary)
-
-                        Link(destination: URL(string: "https://x.com/code_kartik")!) {
-                            HStack(spacing: 3) {
-                                Text("Follow on X")
-                                Image(systemName: "arrow.up.forward")
-                                    .font(.caption2.weight(.semibold))
-                            }
-                        }
+                        Link("YayaShot on GitHub", destination: URL(string: "https://github.com/YahyaElghobashy/yayashot")!)
+                        Link("Upstream BetterShot on GitHub", destination: URL(string: "https://github.com/KartikLabhshetwar/better-shot")!)
                     }
                 }
             }
@@ -1510,14 +1510,14 @@ struct AboutTab: View {
             }
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("BetterShot")
+                Text("YayaShot")
                     .font(.title.weight(.semibold))
 
                 Text("Version \(version) (\(build))")
                     .foregroundStyle(.secondary)
                     .textSelection(.enabled)
 
-                Text("One app for the whole screen. Capture, record, and edit on macOS.")
+                Text("Capture, record and edit your screen. Private by design.")
                     .foregroundStyle(.tertiary)
                     .padding(.top, 2)
             }
@@ -1531,6 +1531,31 @@ struct AboutTab: View {
 
             content()
         }
+    }
+
+    private func releaseCard(_ release: AppUpdater.Release, headline: String, symbol: String, tint: Color) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Label(headline, systemImage: symbol)
+                .foregroundStyle(tint)
+            Text(release.title)
+                .font(.callout.weight(.semibold))
+            if !release.notes.isEmpty {
+                Text(release.notes)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(8)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .textSelection(.enabled)
+            }
+            Button("Open Release Page") { updater.openReleasePage(release) }
+                .controlSize(.small)
+        }
+    }
+
+    private func upstreamNotice(_ release: AppUpdater.Release) -> some View {
+        releaseCard(release,
+                    headline: "Upstream BetterShot shipped \(release.version). See what changed.",
+                    symbol: "arrow.triangle.branch", tint: .secondary)
     }
 
     @ViewBuilder
@@ -1548,50 +1573,17 @@ struct AboutTab: View {
                     .foregroundStyle(.secondary)
             }
 
-        case .available(let newVersion, let url):
-            VStack(alignment: .leading, spacing: 8) {
-                Label("Version \(newVersion) is available", systemImage: "arrow.down.circle.fill")
-                    .foregroundStyle(.green)
-
-                Button("Download and Install") {
-                    Task { await updater.downloadAndInstall(version: newVersion, url: url) }
-                }
-                .buttonStyle(.borderedProminent)
-            }
-
-        case .downloading(let progress):
-            VStack(alignment: .leading, spacing: 8) {
-                ProgressView(value: progress) {
-                    Text("Downloading\u{2026} \(Int(progress * 100))%")
-                        .font(.caption)
-                }
-                .frame(maxWidth: 260)
-
-                Button("Cancel") { updater.cancelDownload() }
-                    .controlSize(.small)
-            }
-
-        case .readyToInstall(let newVersion, let dmgPath):
-            VStack(alignment: .leading, spacing: 8) {
-                Label("Version \(newVersion) is ready", systemImage: "checkmark.circle.fill")
-                    .foregroundStyle(.green)
-
-                Button("Install and Relaunch") {
-                    Task { await updater.installUpdate(dmgPath: dmgPath) }
-                }
-                .buttonStyle(.borderedProminent)
-            }
-
-        case .installing:
-            HStack(spacing: 8) {
-                ProgressView().controlSize(.small)
-                Text("Installing\u{2026}")
-                    .foregroundStyle(.secondary)
-            }
+        case .available(let release):
+            releaseCard(release, headline: "YayaShot \(release.version) is available",
+                        symbol: "arrow.down.circle.fill", tint: .green)
 
         case .upToDate:
-            Label("BetterShot is up to date", systemImage: "checkmark.circle.fill")
-                .foregroundStyle(.green)
+            VStack(alignment: .leading, spacing: 8) {
+                Label("YayaShot is up to date", systemImage: "checkmark.circle.fill")
+                    .foregroundStyle(.green)
+                Button("Check Again") { Task { await updater.checkForUpdates() } }
+                    .controlSize(.small)
+            }
 
         case .failed(let message):
             VStack(alignment: .leading, spacing: 8) {

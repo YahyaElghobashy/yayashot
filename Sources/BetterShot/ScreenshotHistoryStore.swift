@@ -478,7 +478,7 @@ final class ScreenshotHistoryStore {
         if !items.contains(where: { $0.url.standardizedFileURL == standardized }) {
             // Untouched images and imported videos can be shared without an editor save.
             let name = ScreenshotFileActions.captureFileName(for: fileURL, extension: fileURL.pathExtension)
-            if ShareBundle.mimeType(for: fileURL).hasPrefix("video/") {
+            if UTType(filenameExtension: fileURL.pathExtension)?.conforms(to: .movie) == true {
                 standardized = await importVideo(from: fileURL, named: name).standardizedFileURL
             } else {
                 standardized = importScreenshot(from: fileURL, named: name,

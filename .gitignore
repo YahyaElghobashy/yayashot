@@ -42,3 +42,7 @@ scripts/
 # Claude Code local worktrees (shared CLAUDE.md is tracked)
 .claude/worktrees/
 .build-release/
+
+# YayaShot build output
+/build/
+/dist/

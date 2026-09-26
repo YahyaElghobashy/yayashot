@@ -1,0 +1,2 @@
+43ca0137201a479fbd891b129155f4a84c1e1b13
+sindresorhus/DockProgress tag 5.1.0

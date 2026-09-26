@@ -250,63 +250,24 @@ final class PreviewOverlay {
     }
 
     func transferStatus(for url: URL) -> TransferStatus? {
-        if let id = shareIDs[url], let progress = CloudUploader.shared.uploadProgress[id] {
-            return .working(stage: .uploading, progress: progress)
-        }
-        return shareStatuses[url]
+        shareStatuses[url]
     }
 
+    /// YayaShot: Share opens the macOS share sheet for the capture. Upstream
+    /// uploaded it to a cloud bucket instead; that pipeline is removed.
     func share(_ url: URL) {
-        guard shareIDs[url] == nil else { return }
         if !items.contains(url) { show(url: url, automaticallyDismiss: false) }
         cancelScheduledDismiss(for: url)
-        toastURL = url
-        guard CloudUploader.shared.canShare else {
-            shareStatuses[url] = R2CredentialStore.shared.isConfigured
-                ? .failed(headline: "Uploads are off",
-                    message: "Turn on Upload when I share in Settings \u{2192} Sharing, then try again.", canRetry: true)
-                : .failed(headline: "Set up cloud sharing",
-                    message: "Add your cloud account in Settings \u{2192} Sharing, then try again.", canRetry: true)
-            return
-        }
         let savedURL = DeckStaging.retain(url)
         guard !DeckStaging.isStaged(savedURL) else {
+            toastURL = url
             shareStatuses[url] = .failed(headline: "Couldn’t prepare capture",
                 message: "The screenshot is still in the deck. Check available disk space and retry.", canRetry: true)
             return
         }
-        let id = UUID()
-        shareIDs[url] = id
-        shareStatuses[url] = .working(stage: .processing, progress: nil)
-        shareTasks[url] = Task {
-            do {
-                let uploadURL = try await RecordingDeliverable.resolve(for: savedURL)
-                try Task.checkCancellation()
-                let result = try await CloudUploader.shared.upload(
-                    itemID: id, fileURL: uploadURL, named: ScreenshotFileActions.captureName(for: url))
-                if let session = RecordingDeliverable.session(for: savedURL) {
-                    await ScreenshotHistoryStore.shared.importRecordingSession(session)
-                    ScreenshotHistoryStore.shared.setCloudURL(forSession: session, cloudURL: result.url)
-                } else {
-                    await ScreenshotHistoryStore.shared.setCloudURL(for: savedURL, cloudURL: result.url)
-                }
-                try Task.checkCancellation()
-                guard shareIDs[url] == id, let link = URL(string: result.url) else { return }
-                NSPasteboard.general.clearContents()
-                NSPasteboard.general.setString(result.url, forType: .string)
-                shareStatuses[url] = .linkReady(url: link)
-            } catch {
-                guard shareIDs[url] == id else { return }
-                if Task.isCancelled || error is CancellationError || (error as? URLError)?.code == .cancelled {
-                    shareStatuses.removeValue(forKey: url)
-                } else {
-                    shareStatuses[url] = .failed(headline: "Upload failed",
-                        message: error.localizedDescription, canRetry: true)
-                }
-            }
-            guard shareIDs[url] == id else { return }
-            shareIDs.removeValue(forKey: url)
-            shareTasks.removeValue(forKey: url)
+        Task {
+            let fileURL = (try? await RecordingDeliverable.resolve(for: savedURL)) ?? savedURL
+            LocalShareSheet.present(fileURL, from: panel?.contentView)
             scheduleDismiss(for: url)
         }
     }
@@ -319,8 +280,7 @@ final class PreviewOverlay {
 
     func cancelShare(for url: URL) {
         shareTasks.removeValue(forKey: url)?.cancel()
-        if let id = shareIDs.removeValue(forKey: url) {
-            CloudUploader.shared.cancelUpload(for: id)
+        if shareIDs.removeValue(forKey: url) != nil {
             shareStatuses.removeValue(forKey: url)
         }
         if toastURL == url { toastURL = nil }
@@ -558,9 +518,7 @@ struct PreviewCardView: View {
                     onCancel: { overlay.cancelShare(for: url) },
                     onRetry: { overlay.share(url) },
                     onDismiss: { overlay.dismissShareStatus(for: url) }, compactSize: cardSize,
-                    onSettings: CloudUploader.shared.canShare ? nil : {
-                        SettingsWindowController.shared.open(section: .sharing)
-                    })
+                    onSettings: nil)
             } else if let image = thumbnail {
                 ZStack {
                     // onDrag/onTapGesture live on this base image, not on the

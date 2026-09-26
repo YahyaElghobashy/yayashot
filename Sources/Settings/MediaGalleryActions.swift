@@ -34,21 +34,11 @@ extension MediaGalleryItem {
         }
     }
 
+    /// YayaShot has no cloud storage. Links saved by an earlier upstream
+    /// install are only forgotten locally; nothing is sent anywhere.
     func deleteCloud() async throws {
         guard let cloudURL else { return }
-        let credentials = R2CredentialStore.shared.snapshot()
-        guard let slug = Self.deletionSlug(for: cloudURL, publicBaseURL: credentials.publicBaseURL) else {
-            throw R2UploadError(message: "This link belongs to different cloud storage. Select its original R2 settings in Settings > Sharing, then retry.")
-        }
-        try await R2Uploader.deleteShare(slug: slug, credentials: credentials)
         try ScreenshotHistoryStore.shared.forgetCloudLink(cloudURL.absoluteString)
         try HistoryStore.shared.forgetCloudLink(cloudURL.absoluteString)
-    }
-
-    static func deletionSlug(for url: URL, publicBaseURL: String) -> String? {
-        guard let slug = R2Uploader.slug(fromShareLink: url.absoluteString), !slug.isEmpty,
-              slug.unicodeScalars.allSatisfy({ CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_").contains($0) }),
-              ShareBundle.pageURL(id: slug, publicBaseURL: publicBaseURL) == url else { return nil }
-        return slug
     }
 }

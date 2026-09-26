@@ -108,10 +108,6 @@ struct RecordingStudioContent: View {
                         saveStatus
                     }
 
-                    if model.canShareToCloud {
-                        shareStatus
-                    }
-
                     exportStatus
 
                     Button {
@@ -291,10 +287,6 @@ struct RecordingStudioContent: View {
         )
     }
 
-    private var shareSuggestedTitle: String {
-        model.projectDisplayName
-    }
-
     /// AppKit already paints the unsaved dot in the close button; the title
     /// says it in words for anyone who reads the title bar first.
     private var windowTitle: String {
@@ -345,16 +337,6 @@ struct RecordingStudioContent: View {
         }
         .disabled(!model.hasUnsavedChanges)
         .help(ShortcutService.shared.help("Save your edits in BetterShot", for: .videoSave))
-    }
-
-    @ViewBuilder
-    private var shareStatus: some View {
-        CloudUploadButton(suggestedTitle: shareSuggestedTitle, onUpload: model.shareToCloud, shortcutAction: .videoShare) {
-            Label("Share", systemImage: "icloud.and.arrow.up")
-                .labelStyle(.titleAndIcon)
-        }
-        .disabled(!model.isLoaded || model.exportState.isExporting || model.shareState.isBusy)
-        .help("Upload and copy a share link")
     }
 
     @ViewBuilder

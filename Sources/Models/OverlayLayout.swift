@@ -39,7 +39,7 @@ enum OverlayTool: String, CaseIterable, Identifiable, Sendable {
         case .copy: "doc.on.doc"
         case .save: "square.and.arrow.down"
         case .edit: "pencil.circle.fill"
-        case .share: "icloud.and.arrow.up"
+        case .share: "square.and.arrow.up"
         }
     }
 }

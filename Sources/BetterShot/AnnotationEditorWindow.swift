@@ -36,7 +36,6 @@ struct AnnotationEditorWindow: View {
     @State private var isCopying = false
     @State private var copyFlash = false
     @State private var uploadPhase: AnnotationUploadPhase = .idle
-    @State private var lastUploadOptions: CloudUploadOptions?
     @State private var closeGuard = EditorCloseGuard()
     @FocusState private var focusedField: AnnotationEditorFocusedField?
     @Environment(\.dismiss) private var dismissWindow
@@ -355,19 +354,6 @@ struct AnnotationEditorWindow: View {
             if model.isCropping {
                 CropResolutionBadge(size: model.cropPixelSize)
             } else {
-                if CloudUploader.shared.canShare {
-                    CloudUploadButton(
-                        suggestedTitle: model.sourceURL?.deletingPathExtension().lastPathComponent ?? "",
-                        onUpload: uploadAnnotation, shortcutAction: .imageShare
-                    ) {
-                        Label("Share", systemImage: "icloud.and.arrow.up")
-                            .labelStyle(.titleAndIcon)
-                            .padding(.horizontal, 6)
-                    }
-                    .help("Upload and copy a share link")
-                    .disabled(model.previewImage == nil || model.imageSize == .zero || uploadPhase.isUploading || isExporting)
-                }
-
                 Button(action: copyToClipboard) {
                     if isCopying {
                         ProgressView().controlSize(.small)
@@ -508,15 +494,13 @@ struct AnnotationEditorWindow: View {
             return .failed(
                 headline: "Upload failed",
                 message: message,
-                canRetry: lastUploadOptions != nil
+                canRetry: false
             )
         }
     }
 
     private func retryUpload() {
-        guard case .failed = uploadPhase, let lastUploadOptions else { return }
         uploadPhase = .idle
-        uploadAnnotation(options: lastUploadOptions)
     }
 
     private func closeAfterLoadFailure() {
@@ -615,54 +599,6 @@ struct AnnotationEditorWindow: View {
             wallpaperStore.addRecentWallpaper(url)
             model.backgroundSettings.customWallpaper = wallpaper
             model.backgroundSettings.style = .customWallpaper(wallpaper)
-        }
-    }
-
-    private func uploadAnnotation(options: CloudUploadOptions) {
-        clearInspectorFocus()
-        guard model.sourceURL != nil, !uploadPhase.isUploading, !isExporting else { return }
-
-        let itemID = UUID()
-        lastUploadOptions = options
-        uploadPhase = .uploading(itemID)
-        Task {
-            do {
-                // Persist the current annotations first so the uploaded file
-                // matches what's saved in history, then upload that file. An
-                // untouched screenshot has nothing to commit, so it uploads
-                // as-is. The editor stays open.
-                guard let sourceURL = model.sourceURL else {
-                    uploadPhase = .idle
-                    return
-                }
-                let resultURL = try await commitEdits() ?? sourceURL
-
-                _ = ScreenshotPreviewStack.shared.applyAnnotation(
-                    originalURL: sourceURL,
-                    historyURL: resultURL
-                )
-
-                let result = try await CloudUploader.shared.upload(
-                    itemID: itemID,
-                    fileURL: resultURL,
-                    named: ScreenshotFileActions.captureName(for: sourceURL),
-                    title: options.trimmedTitleOrNil
-                )
-                NSPasteboard.general.clearContents()
-                NSPasteboard.general.setString(result.url, forType: .string)
-                await ScreenshotHistoryStore.shared.setCloudURL(for: resultURL, cloudURL: result.url)
-                if let shareURL = URL(string: result.url) {
-                    uploadPhase = .finished(shareURL)
-                } else {
-                    uploadPhase = .idle
-                }
-            } catch is CancellationError {
-                uploadPhase = .idle
-            } catch let error as URLError where error.code == .cancelled {
-                uploadPhase = .idle
-            } catch {
-                uploadPhase = .failed(error.localizedDescription)
-            }
         }
     }
 
