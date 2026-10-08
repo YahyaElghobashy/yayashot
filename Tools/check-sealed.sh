@@ -54,7 +54,7 @@ PROC = re.compile(r'\b(Process\s*\(|launchPath|executableURL|posix_spawn|NSUserU
 REMOTE_LOAD = re.compile(r'(contentsOf|contentsOfURL|url)\s*:\s*URL\s*\(\s*string')
 SCHEME = re.compile(r'([A-Za-z][A-Za-z0-9+.-]*)://([A-Za-z0-9.-]*)')
 PROC_ALLOWED = {"Sources/Capture/ScreencaptureRunner.swift", "Sources/App/BetterShotDelegate.swift"}
-GITHUB_LINK_FILES = {"Sources/Settings/PreferencesView.swift", "Sources/App/ReleaseNotesWindowController.swift", "Sources/Services/AppUpdater.swift"}
+GITHUB_LINK_FILES = {"Sources/Settings/PreferencesView.swift", "Sources/Settings/MadeByFooter.swift", "Sources/App/ReleaseNotesWindowController.swift", "Sources/Services/AppUpdater.swift"}
 API_FILES = {"Sources/Services/AppUpdater.swift"}
 
 problems = []

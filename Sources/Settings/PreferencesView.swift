@@ -1508,6 +1508,8 @@ struct AboutTab: View {
                         Link("Upstream BetterShot on GitHub", destination: URL(string: "https://github.com/KartikLabhshetwar/better-shot")!)
                     }
                 }
+
+                MadeByFooter()
             }
             .padding(28)
             .frame(maxWidth: .infinity, alignment: .leading)
